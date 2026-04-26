@@ -16,6 +16,7 @@ var is_player_nearby: bool = false
 
 func _ready() -> void:
 	durability = max_durability
+	add_to_group("machines")
 	repair_zone.body_entered.connect(_on_repair_zone_body_entered)
 	repair_zone.body_exited.connect(_on_repair_zone_body_exited)
 	durability_changed.connect(_on_durability_changed)
@@ -49,3 +50,9 @@ func _on_repair_zone_body_exited(body: Node) -> void:
 func _on_durability_changed(value: float) -> void:
 	durability_bar.value = value
 	body_visual.modulate = Color.RED if value < 20.0 else Color.WHITE
+
+
+func get_efficiency() -> float:
+	if is_zero_approx(max_durability):
+		return 0.0
+	return durability / max_durability

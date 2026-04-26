@@ -1,7 +1,11 @@
-[gd_scene format=3 uid="uid://7wvbblcvsqvw"]
+[gd_scene load_steps=10 format=3 uid="uid://7wvbblcvsqvw"]
 
+[ext_resource type="Script" path="res://scenes/world/main.gd" id="1_7f8w0"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/machine/machine.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="3_8ib8m"]
+[ext_resource type="PackedScene" path="res://scenes/ui/day_end.tscn" id="5_2q85e"]
+[ext_resource type="PackedScene" path="res://scenes/ui/win.tscn" id="6_cnmbu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
 size = Vector2(1152, 32)
@@ -16,6 +20,7 @@ size = Vector2(32, 648)
 size = Vector2(32, 648)
 
 [node name="Main" type="Node2D" unique_id=1366100719]
+script = ExtResource("1_7f8w0")
 
 [node name="Background" type="ColorRect" parent="." unique_id=726949760]
 z_index = -100
@@ -62,3 +67,9 @@ position = Vector2(860, 180)
 
 [node name="MachineC" parent="." unique_id=116840076 instance=ExtResource("2")]
 position = Vector2(576, 500)
+
+[node name="HUD" parent="." instance=ExtResource("3_8ib8m")]
+
+[node name="DayEnd" parent="." instance=ExtResource("5_2q85e")]
+
+[node name="Win" parent="." instance=ExtResource("6_cnmbu")]
