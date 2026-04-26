@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://7wvbblcvsqvw"]
+
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/machine/machine.tscn" id="2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
+size = Vector2(1152, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom"]
+size = Vector2(1152, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left"]
+size = Vector2(32, 648)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right"]
+size = Vector2(32, 648)
+
+[node name="Main" type="Node2D" unique_id=1366100719]
+
+[node name="Background" type="ColorRect" parent="." unique_id=726949760]
+z_index = -100
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 2
+color = Color(0.16, 0.16, 0.16, 1)
+
+[node name="TopWall" type="StaticBody2D" parent="." unique_id=727282626]
+position = Vector2(576, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall" unique_id=1156610624]
+shape = SubResource("RectangleShape2D_top")
+
+[node name="BottomWall" type="StaticBody2D" parent="." unique_id=803133759]
+position = Vector2(576, 664)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall" unique_id=165418649]
+shape = SubResource("RectangleShape2D_bottom")
+
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=1975808919]
+position = Vector2(-16, 324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=16224880]
+shape = SubResource("RectangleShape2D_left")
+
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=1108727448]
+position = Vector2(1168, 324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=1802980214]
+shape = SubResource("RectangleShape2D_right")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2131366753]
+position = Vector2(576, 324)
+
+[node name="Player" parent="." unique_id=2090996624 instance=ExtResource("1")]
+position = Vector2(576, 324)
+
+[node name="MachineA" parent="." unique_id=1724123503 instance=ExtResource("2")]
+position = Vector2(260, 180)
+
+[node name="MachineB" parent="." unique_id=1589928272 instance=ExtResource("2")]
+position = Vector2(860, 180)
+
+[node name="MachineC" parent="." unique_id=116840076 instance=ExtResource("2")]
+position = Vector2(576, 500)
