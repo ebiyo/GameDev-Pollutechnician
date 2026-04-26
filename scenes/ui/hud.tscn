@@ -1,11 +1,12 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://bo67vgd7ke7j4"]
 
-[ext_resource type="Script" path="res://scenes/ui/hud.gd" id="1"]
+[ext_resource type="Script" uid="uid://vbttb04tl0ov" path="res://scenes/ui/hud.gd" id="1"]
 
-[node name="HUD" type="CanvasLayer"]
+[node name="HUD" type="CanvasLayer" unique_id=31293835]
 script = ExtResource("1")
 
-[node name="PollutionLabel" type="Label" parent="."]
+[node name="PollutionLabel" type="Label" parent="." unique_id=604345239]
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -80.0
@@ -15,27 +16,85 @@ offset_bottom = 31.0
 text = "Pollution"
 horizontal_alignment = 1
 
-[node name="PollutionBar" type="ProgressBar" parent="."]
+[node name="PollutionBar" type="ProgressBar" parent="." unique_id=1398171909]
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -160.0
 offset_top = 36.0
 offset_right = 160.0
 offset_bottom = 60.0
-max_value = 100.0
 
-[node name="TimeLabel" type="Label" parent="."]
+[node name="EventLogPanel" type="Control" parent="." unique_id=1071374907]
+visible = false
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -180.0
+offset_right = 320.0
+offset_bottom = -12.0
+
+[node name="EventLogEntries" type="VBoxContainer" parent="EventLogPanel" unique_id=949127173]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+
+[node name="CardTooltipLabel" type="Label" parent="." unique_id=273761750]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -364.0
+offset_top = -230.0
+offset_right = -12.0
+offset_bottom = -198.0
+text = "Card effect"
+horizontal_alignment = 2
+autowrap_mode = 3
+
+[node name="CardsRoot" type="Control" parent="." unique_id=973233142]
+visible = false
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -364.0
+offset_top = -190.0
+offset_right = -12.0
+offset_bottom = -12.0
+
+[node name="CardsContainer" type="HBoxContainer" parent="CardsRoot" unique_id=7412560]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+alignment = 2
+
+[node name="TimeLabel" type="Label" parent="." unique_id=2037864965]
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -140.0
 offset_top = 12.0
 offset_right = -12.0
 offset_bottom = 52.0
+theme_override_font_sizes/font_size = 28
 text = "08:00"
 horizontal_alignment = 2
-theme_override_font_sizes/font_size = 28
 
-[node name="DayLabel" type="Label" parent="."]
+[node name="DayLabel" type="Label" parent="." unique_id=1328148074]
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -140.0
@@ -45,14 +104,25 @@ offset_bottom = 78.0
 text = "Day 1 / 3"
 horizontal_alignment = 2
 
-[node name="OverThresholdLabel" type="Label" parent="."]
-visible = false
+[node name="DayEndHintLabel" type="Label" parent="." unique_id=903776942]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -170.0
+offset_top = 80.0
+offset_right = -12.0
+offset_bottom = 104.0
+text = "day ends at 18:00"
+horizontal_alignment = 2
+
+[node name="OverThresholdLabel" type="Label" parent="." unique_id=2029323038]
+modulate = Color(1, 0.45, 0.45, 1)
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -220.0
-offset_top = 82.0
+offset_top = 108.0
 offset_right = -12.0
-offset_bottom = 106.0
-modulate = Color(1, 0.45, 0.45, 1)
-text = "Over limit: 0.0 / 2.0 min"
+offset_bottom = 132.0
+text = "Over limit: 0.0 / 20.0 min"
 horizontal_alignment = 2

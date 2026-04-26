@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="3_8ib8m"]
 [ext_resource type="PackedScene" path="res://scenes/ui/repair_popup.tscn" id="4_4w2ku"]
 [ext_resource type="PackedScene" path="res://scenes/ui/day_end.tscn" id="5_2q85e"]
+[ext_resource type="PackedScene" path="res://scenes/ui/day_start.tscn" id="6_4hp2r"]
 [ext_resource type="PackedScene" path="res://scenes/ui/win.tscn" id="6_cnmbu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
@@ -74,5 +75,7 @@ position = Vector2(576, 500)
 [node name="RepairPopup" parent="." unique_id=525389809 instance=ExtResource("4_4w2ku")]
 
 [node name="DayEnd" parent="." unique_id=1166230509 instance=ExtResource("5_2q85e")]
+
+[node name="DayStart" parent="." instance=ExtResource("6_4hp2r")]
 
 [node name="Win" parent="." unique_id=579178099 instance=ExtResource("6_cnmbu")]

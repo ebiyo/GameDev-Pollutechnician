@@ -7,8 +7,8 @@ var pollution: float = 0.0
 var base_increase_rate: float = 3.0
 var ingame_minutes_over: float = 0.0
 
-@export var lose_threshold_minutes: float = 2.0
-@export var ingame_day_minutes: float = 60.0
+@export var lose_threshold_minutes: float = 20.0
+@export var ingame_day_minutes: float = 600.0
 
 
 func _ready() -> void:

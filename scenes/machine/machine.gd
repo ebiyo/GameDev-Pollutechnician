@@ -5,7 +5,7 @@ signal durability_changed(value: float)
 signal repair_requested(machine: Machine)
 
 @export var max_durability: float = 100.0
-@export var drain_rate: float = 5.0
+@export var drain_rate: float = 3.0
 @export var overclock_drain_rate: float = 8.0
 
 var durability: float = max_durability
@@ -13,12 +13,14 @@ var overclock: float = 0.0
 var max_overclock: float = 100.0
 var is_player_nearby: bool = false
 var is_in_repair: bool = false
+var is_efficiency_penalised: bool = false
 var _last_durability: float = max_durability
 var _last_overclock: float = 0.0
 
 @onready var repair_zone: Area2D = $RepairZone
 @onready var durability_bar: ProgressBar = $StatusBars/DurabilityBar
 @onready var overclock_bar: ProgressBar = $StatusBars/OverclockBar
+@onready var interact_label: Label = $InteractLabel
 @onready var body_visual: ColorRect = $Body
 
 
@@ -36,6 +38,7 @@ func _ready() -> void:
 	_last_durability = durability
 	_last_overclock = overclock
 	_update_status_display()
+	_update_interact_prompt()
 
 
 func _process(delta: float) -> void:
@@ -43,12 +46,15 @@ func _process(delta: float) -> void:
 		durability = maxf(durability - drain_rate * delta, 0.0)
 
 	if overclock > 0.0:
-		overclock = maxf(overclock - overclock_drain_rate * delta, 0.0)
+		var overclock_drain_multiplier: float = 0.35 if is_in_repair else 1.0
+		overclock = maxf(overclock - overclock_drain_rate * overclock_drain_multiplier * delta, 0.0)
 
 	if !is_equal_approx(durability, _last_durability):
 		durability_changed.emit(durability)
 	elif !is_equal_approx(overclock, _last_overclock):
 		_update_status_display()
+
+	_update_interact_prompt()
 
 	_last_durability = durability
 	_last_overclock = overclock
@@ -68,13 +74,15 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _on_repair_zone_body_entered(body: Node) -> void:
-	if body.name == "Player":
+	if body.is_in_group("player"):
 		is_player_nearby = true
+		_update_interact_prompt()
 
 
 func _on_repair_zone_body_exited(body: Node) -> void:
-	if body.name == "Player":
+	if body.is_in_group("player"):
 		is_player_nearby = false
+		_update_interact_prompt()
 
 
 func _on_durability_changed(value: float) -> void:
@@ -85,14 +93,21 @@ func get_efficiency() -> float:
 	if is_zero_approx(max_durability):
 		return 0.0
 
-	var base := durability / max_durability
+	var efficiency: float = durability / max_durability
 	if overclock > 0.0:
-		return clampf(base + 0.4, 0.0, 1.4)
+		efficiency = clampf(efficiency + 0.4, 0.0, 1.4)
 
-	return base
+	if is_efficiency_penalised:
+		efficiency *= 0.5
+
+	return efficiency
 
 
 func _update_status_display() -> void:
 	durability_bar.value = durability
 	overclock_bar.value = overclock
 	body_visual.modulate = Color.RED if durability < 20.0 else Color.WHITE
+
+
+func _update_interact_prompt() -> void:
+	interact_label.visible = is_player_nearby and !is_in_repair

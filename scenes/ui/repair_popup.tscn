@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://cdi5tljjstj0p" path="res://scenes/ui/repair_popup.gd" id="1_i5ki6"]
 
 [node name="RepairPopup" type="CanvasLayer" unique_id=1107602296]
-visible = false
 script = ExtResource("1_i5ki6")
 
 [node name="Panel" type="PanelContainer" parent="." unique_id=181362559]
@@ -15,7 +14,7 @@ anchor_bottom = 0.5
 offset_left = -210.0
 offset_top = -110.0
 offset_right = 210.0
-offset_bottom = 110.0
+offset_bottom = 117.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=62595777]
 layout_mode = 2
@@ -26,10 +25,22 @@ layout_mode = 2
 text = "Machine A"
 horizontal_alignment = 1
 
-[node name="TimingBar" type="Control" parent="Panel/VBoxContainer" unique_id=502582052]
-custom_minimum_size = Vector2(380, 40)
+[node name="SpeedLabel" type="Label" parent="Panel/VBoxContainer" unique_id=7474269]
+layout_mode = 2
+text = "Needle Speed: 0.35   Repair: +18.0"
+horizontal_alignment = 1
+
+[node name="TimingArea" type="Control" parent="Panel/VBoxContainer" unique_id=1033361489]
+custom_minimum_size = Vector2(380, 56)
 layout_mode = 2
 size_flags_horizontal = 4
+
+[node name="TimingBar" type="Control" parent="Panel/VBoxContainer/TimingArea" unique_id=502582052]
+custom_minimum_size = Vector2(380, 40)
+anchors_preset = 0
+offset_top = 16.0
+offset_right = 380.0
+offset_bottom = 56.0
 
 [node name="Bars" type="VBoxContainer" parent="Panel/VBoxContainer" unique_id=1766322952]
 layout_mode = 2
@@ -48,6 +59,7 @@ text = "Durability"
 modulate = Color(0.35, 1, 0.35, 1)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 value = 100.0
 show_percentage = false
 
@@ -64,6 +76,7 @@ text = "Overclock"
 modulate = Color(0.35, 0.65, 1, 1)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 show_percentage = false
 
 [node name="ControlsLabel" type="Label" parent="Panel/VBoxContainer" unique_id=464445036]

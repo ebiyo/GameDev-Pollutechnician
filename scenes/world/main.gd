@@ -3,6 +3,7 @@ extends Node2D
 const GAME_OVER_SCENE := preload("res://scenes/ui/game_over.tscn")
 
 @onready var day_end_screen: CanvasLayer = $DayEnd
+@onready var day_start_screen: CanvasLayer = $DayStart
 @onready var repair_popup: RepairPopup = $RepairPopup
 @onready var win_screen: CanvasLayer = $Win
 
@@ -21,15 +22,23 @@ func _ready() -> void:
 func _on_game_over() -> void:
 	if is_instance_valid(game_over_screen):
 		game_over_screen.visible = true
+		get_tree().paused = true
 		return
 
 	game_over_screen = GAME_OVER_SCENE.instantiate()
 	add_child(game_over_screen)
+	game_over_screen.process_mode = Node.PROCESS_MODE_ALWAYS
 	game_over_screen.visible = true
+	get_tree().paused = true
 
 
 func _on_day_ended(_money_earned: int) -> void:
-	day_end_screen.visible = true
+	if repair_popup.visible:
+		repair_popup.close()
+	day_end_screen.visible = false
+	day_start_screen.visible = true
+	day_start_screen.process_mode = Node.PROCESS_MODE_ALWAYS
+	get_tree().paused = true
 
 
 func _on_game_won() -> void:
@@ -44,11 +53,10 @@ func open_repair_popup(machine: Machine) -> void:
 
 
 func _connect_machine_signals() -> void:
-	for child in get_children():
-		if child is Machine:
-			var machine := child as Machine
-			if !machine.repair_requested.is_connected(open_repair_popup):
-				machine.repair_requested.connect(open_repair_popup)
+	for machine_node in get_tree().get_nodes_in_group("machines"):
+		var machine := machine_node as Machine
+		if machine != null and !machine.repair_requested.is_connected(open_repair_popup):
+			machine.repair_requested.connect(open_repair_popup)
 
 
 func _on_repair_popup_closed() -> void:

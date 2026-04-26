@@ -13,16 +13,21 @@ class TimingBarControl extends Control:
 			popup._draw_timing_bar(self)
 
 
-@export var repair_amount: float = 18.0
-@export var overclock_amount: float = 22.0
+@export var repair_amount: float = 12.0
+@export var overclock_amount: float = 20.0
 
 var current_machine: Machine = null
 var needle_pos: float = 0.0
 var needle_dir: float = 1.0
 var hit_zone_center: float = 0.5
 var timing_bar: Control
+var _durability_flash_tween: Tween = null
+var _speed_adjust_timer: float = 0.0
+
+const SPEED_ADJUST_INTERVAL: float = 0.08
 
 @onready var machine_label: Label = $Panel/VBoxContainer/MachineLabel
+@onready var speed_label: Label = $Panel/VBoxContainer/SpeedLabel
 @onready var durability_bar: ProgressBar = $Panel/VBoxContainer/Bars/DurabilityRow/DurabilityBar
 @onready var overclock_bar: ProgressBar = $Panel/VBoxContainer/Bars/OverclockRow/OverclockBar
 
@@ -37,6 +42,7 @@ func _process(delta: float) -> void:
 	if !visible or !is_instance_valid(current_machine):
 		return
 
+	_handle_speed_adjust_input(delta)
 	needle_pos += needle_dir * RepairManager.needle_speed * delta
 
 	if needle_pos >= 1.0 or needle_pos <= 0.0:
@@ -75,6 +81,8 @@ func open(machine: Machine) -> void:
 	current_machine.is_in_repair = true
 	needle_pos = 0.0
 	needle_dir = 1.0
+	_speed_adjust_timer = 0.0
+	durability_bar.modulate = Color(0.35, 1.0, 0.35, 1.0)
 	_randomize_hit_zone()
 	_sync_bars()
 	show()
@@ -94,12 +102,15 @@ func _handle_space_press() -> void:
 
 	if hit:
 		if current_machine.durability < current_machine.max_durability:
-			current_machine.durability = minf(current_machine.durability + repair_amount, current_machine.max_durability)
+			current_machine.durability = minf(
+				current_machine.durability + _get_repair_amount(),
+				current_machine.max_durability
+			)
 		else:
 			current_machine.overclock = minf(current_machine.overclock + overclock_amount, current_machine.max_overclock)
-		RepairManager.speed_up()
 	else:
-		RepairManager.slow_down()
+		current_machine.durability = maxf(current_machine.durability - 0.5, 0.0)
+		_flash_durability_bar()
 
 	_randomize_hit_zone()
 	_sync_bars()
@@ -111,10 +122,35 @@ func _sync_bars() -> void:
 		return
 
 	machine_label.text = _format_machine_name(current_machine.name)
+	speed_label.text = "Needle Speed: %.2f   Repair: +%.1f" % [RepairManager.needle_speed, _get_repair_amount()]
 	durability_bar.max_value = current_machine.max_durability
 	durability_bar.value = current_machine.durability
 	overclock_bar.max_value = current_machine.max_overclock
 	overclock_bar.value = current_machine.overclock
+
+
+func _get_repair_amount() -> float:
+	return repair_amount + GameManager.repair_efficiency_bonus
+
+
+func _handle_speed_adjust_input(delta: float) -> void:
+	var direction: int = 0
+	if Input.is_key_pressed(KEY_R):
+		direction += 1
+	if Input.is_key_pressed(KEY_Q):
+		direction -= 1
+
+	if direction == 0:
+		_speed_adjust_timer = 0.0
+		return
+
+	_speed_adjust_timer += delta
+	while _speed_adjust_timer >= SPEED_ADJUST_INTERVAL:
+		_speed_adjust_timer -= SPEED_ADJUST_INTERVAL
+		if direction > 0:
+			RepairManager.speed_up()
+		else:
+			RepairManager.slow_down()
 
 
 func _get_hit_zone_size() -> float:
@@ -129,7 +165,7 @@ func _get_hit_zone_size() -> float:
 
 
 func _replace_timing_bar() -> Control:
-	var placeholder: Control = $Panel/VBoxContainer/TimingBar
+	var placeholder: Control = $Panel/VBoxContainer/TimingArea/TimingBar
 	var replacement := TimingBarControl.new()
 
 	replacement.name = "TimingBar"
@@ -146,6 +182,15 @@ func _replace_timing_bar() -> Control:
 
 func _randomize_hit_zone() -> void:
 	hit_zone_center = randf_range(0.1, 0.9)
+
+
+func _flash_durability_bar() -> void:
+	if _durability_flash_tween != null and _durability_flash_tween.is_valid():
+		_durability_flash_tween.kill()
+
+	durability_bar.modulate = Color(1.0, 0.35, 0.35, 1.0)
+	_durability_flash_tween = create_tween()
+	_durability_flash_tween.tween_property(durability_bar, "modulate", Color(0.35, 1.0, 0.35, 1.0), 0.18)
 
 
 func _draw_timing_bar(target: Control) -> void:

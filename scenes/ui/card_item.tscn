@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://s7y3ta4cssc4"]
+
+[ext_resource type="Script" uid="uid://clnjl1gk7ia7q" path="res://scenes/ui/card_item.gd" id="1"]
+
+[node name="CardItem" type="PanelContainer" unique_id=1456972608]
+custom_minimum_size = Vector2(120, 132)
+script = ExtResource("1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1957176270]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="NameLabel" type="Label" parent="VBoxContainer" unique_id=710063002]
+layout_mode = 2
+text = "Card"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="UseButton" type="Button" parent="VBoxContainer" unique_id=1203939693]
+layout_mode = 2
+text = "Use"
