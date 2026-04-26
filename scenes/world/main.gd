@@ -13,6 +13,8 @@ func _ready() -> void:
 	PollutionManager.game_over.connect(_on_game_over)
 	GameManager.day_ended.connect(_on_day_ended)
 	GameManager.game_won.connect(_on_game_won)
+	repair_popup.popup_closed.connect(_on_repair_popup_closed)
+	_connect_machine_signals()
 	GameManager.start_day()
 
 
@@ -39,3 +41,15 @@ func open_repair_popup(machine: Machine) -> void:
 		return
 
 	repair_popup.open(machine)
+
+
+func _connect_machine_signals() -> void:
+	for child in get_children():
+		if child is Machine:
+			var machine := child as Machine
+			if !machine.repair_requested.is_connected(open_repair_popup):
+				machine.repair_requested.connect(open_repair_popup)
+
+
+func _on_repair_popup_closed() -> void:
+	pass

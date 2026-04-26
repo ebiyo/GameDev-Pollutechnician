@@ -12,6 +12,7 @@ var ingame_minutes_over: float = 0.0
 
 
 func _ready() -> void:
+	GameManager.day_started.connect(_on_day_started)
 	pollution_changed.emit(pollution)
 
 
@@ -29,10 +30,17 @@ func _process(delta: float) -> void:
 	pollution = clampf(pollution + pollution_increase - pollution_reduction, 0.0, 100.0)
 	pollution_changed.emit(pollution)
 
+	if GameManager.current_phase != GameManager.Phase.ACTIVE:
+		return
+
+	var time_scale := ingame_day_minutes / maxf(GameManager.day_duration, 0.001)
 	if pollution >= 100.0:
-		var time_scale := ingame_day_minutes / maxf(GameManager.day_duration, 0.001)
 		ingame_minutes_over += delta * time_scale
 		if ingame_minutes_over >= lose_threshold_minutes:
 			game_over.emit()
 	else:
 		ingame_minutes_over = 0.0
+
+
+func _on_day_started() -> void:
+	ingame_minutes_over = 0.0

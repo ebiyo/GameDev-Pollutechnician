@@ -16,15 +16,15 @@ class TimingBarControl extends Control:
 @export var repair_amount: float = 18.0
 @export var overclock_amount: float = 22.0
 
-var machine: Machine
+var current_machine: Machine = null
 var needle_pos: float = 0.0
-var needle_speed: float = 0.35
-var needle_direction: float = 1.0
+var needle_dir: float = 1.0
+var hit_zone_center: float = 0.5
 var timing_bar: Control
 
 @onready var machine_label: Label = $Panel/VBoxContainer/MachineLabel
-@onready var durability_bar: ProgressBar = $Panel/VBoxContainer/Bars/DurabilityBar
-@onready var overclock_bar: ProgressBar = $Panel/VBoxContainer/Bars/OverclockBar
+@onready var durability_bar: ProgressBar = $Panel/VBoxContainer/Bars/DurabilityRow/DurabilityBar
+@onready var overclock_bar: ProgressBar = $Panel/VBoxContainer/Bars/OverclockRow/OverclockBar
 
 
 func _ready() -> void:
@@ -34,48 +34,98 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if !visible or !is_instance_valid(machine):
+	if !visible or !is_instance_valid(current_machine):
 		return
 
-	_update_needle(delta)
-	_update_bars()
+	needle_pos += needle_dir * RepairManager.needle_speed * delta
+
+	if needle_pos >= 1.0 or needle_pos <= 0.0:
+		needle_dir *= -1.0
+		needle_pos = clampf(needle_pos, 0.0, 1.0)
+
+	_sync_bars()
 	timing_bar.queue_redraw()
 
 
 func _input(event: InputEvent) -> void:
-	if !visible or event is not InputEventKey:
+	if !visible or !is_instance_valid(current_machine) or event is not InputEventKey:
 		return
 
 	var key_event := event as InputEventKey
 	if !key_event.pressed or key_event.echo:
 		return
 
-	if key_event.keycode == KEY_E:
-		close()
-		get_viewport().set_input_as_handled()
-	elif key_event.keycode == KEY_SPACE:
-		_handle_hit()
-		get_viewport().set_input_as_handled()
+	match key_event.keycode:
+		KEY_SPACE:
+			_handle_space_press()
+			get_viewport().set_input_as_handled()
+		KEY_R:
+			RepairManager.speed_up()
+			get_viewport().set_input_as_handled()
+		KEY_Q:
+			RepairManager.slow_down()
+			get_viewport().set_input_as_handled()
+		KEY_E:
+			close()
+			get_viewport().set_input_as_handled()
 
 
-func open(target_machine: Machine) -> void:
-	machine = target_machine
+func open(machine: Machine) -> void:
+	current_machine = machine
+	current_machine.is_in_repair = true
 	needle_pos = 0.0
-	needle_speed = 0.35
-	needle_direction = 1.0
-	get_tree().paused = false
+	needle_dir = 1.0
+	_randomize_hit_zone()
+	_sync_bars()
 	show()
-	machine.is_in_repair = true
-	_update_bars()
 	timing_bar.queue_redraw()
 
 
 func close() -> void:
 	popup_closed.emit()
 	hide()
-	if is_instance_valid(machine):
-		machine.is_in_repair = false
-	machine = null
+	if is_instance_valid(current_machine):
+		current_machine.is_in_repair = false
+	current_machine = null
+
+
+func _handle_space_press() -> void:
+	var hit := absf(needle_pos - hit_zone_center) <= _get_hit_zone_size() * 0.5
+
+	if hit:
+		if current_machine.durability < current_machine.max_durability:
+			current_machine.durability = minf(current_machine.durability + repair_amount, current_machine.max_durability)
+		else:
+			current_machine.overclock = minf(current_machine.overclock + overclock_amount, current_machine.max_overclock)
+		RepairManager.speed_up()
+	else:
+		RepairManager.slow_down()
+
+	_randomize_hit_zone()
+	_sync_bars()
+	timing_bar.queue_redraw()
+
+
+func _sync_bars() -> void:
+	if !is_instance_valid(current_machine):
+		return
+
+	machine_label.text = _format_machine_name(current_machine.name)
+	durability_bar.max_value = current_machine.max_durability
+	durability_bar.value = current_machine.durability
+	overclock_bar.max_value = current_machine.max_overclock
+	overclock_bar.value = current_machine.overclock
+
+
+func _get_hit_zone_size() -> float:
+	if !is_instance_valid(current_machine):
+		return 0.15
+
+	if current_machine.durability < current_machine.max_durability:
+		var fill_ratio := clampf(current_machine.durability / maxf(current_machine.max_durability, 0.001), 0.0, 1.0)
+		return lerpf(0.35, 0.06, fill_ratio)
+
+	return 0.15
 
 
 func _replace_timing_bar() -> Control:
@@ -91,73 +141,22 @@ func _replace_timing_bar() -> Control:
 
 	placeholder.replace_by(replacement)
 	placeholder.queue_free()
-
 	return replacement
 
 
-func _update_needle(delta: float) -> void:
-	needle_pos += needle_direction * needle_speed * delta
-
-	if needle_pos >= 1.0:
-		needle_pos = 1.0
-		needle_direction = -1.0
-	elif needle_pos <= 0.0:
-		needle_pos = 0.0
-		needle_direction = 1.0
-
-
-func _handle_hit() -> void:
-	if !is_instance_valid(machine):
-		return
-
-	var hit_zone_half := _get_hit_zone_size() * 0.5
-	var zone_min := 0.5 - hit_zone_half
-	var zone_max := 0.5 + hit_zone_half
-
-	if needle_pos >= zone_min and needle_pos <= zone_max:
-		if machine.durability < machine.max_durability:
-			machine.durability = minf(machine.durability + repair_amount, machine.max_durability)
-		else:
-			machine.overclock = minf(machine.overclock + overclock_amount, machine.max_overclock)
-		needle_speed = clampf(needle_speed + 0.07, 0.15, 0.9)
-	else:
-		needle_speed = clampf(needle_speed - 0.06, 0.15, 0.9)
-
-	_update_bars()
-	timing_bar.queue_redraw()
-
-
-func _update_bars() -> void:
-	if !is_instance_valid(machine):
-		return
-
-	machine_label.text = _format_machine_name(machine.name)
-	durability_bar.value = machine.durability
-	durability_bar.max_value = machine.max_durability
-	overclock_bar.value = machine.overclock
-	overclock_bar.max_value = machine.max_overclock
-	overclock_bar.modulate = Color(1.0, 0.85, 0.2, 1.0) if machine.overclock >= machine.max_overclock else Color(0.35, 0.65, 1.0, 1.0)
-
-
-func _get_hit_zone_size() -> float:
-	if !is_instance_valid(machine):
-		return 0.15
-
-	if machine.durability >= machine.max_durability:
-		return 0.15
-
-	var fill_ratio := clampf(machine.durability / maxf(machine.max_durability, 0.001), 0.0, 1.0)
-	return lerpf(0.35, 0.05, fill_ratio)
+func _randomize_hit_zone() -> void:
+	hit_zone_center = randf_range(0.1, 0.9)
 
 
 func _draw_timing_bar(target: Control) -> void:
 	var bar_rect := Rect2(Vector2.ZERO, target.size)
 	target.draw_rect(bar_rect, Color(0.15, 0.15, 0.15, 1.0), true)
 
-	var hit_zone_width := _get_hit_zone_size() * target.size.x
-	var hit_zone_left := (target.size.x - hit_zone_width) * 0.5
-	var hit_zone_rect := Rect2(Vector2(hit_zone_left, 0.0), Vector2(hit_zone_width, target.size.y))
-	target.draw_rect(hit_zone_rect, Color(0.2, 0.8, 0.3, 1.0), true)
+	var hit_zone_size := _get_hit_zone_size()
+	var zone_left := (hit_zone_center - hit_zone_size * 0.5) * target.size.x
+	var zone_width := hit_zone_size * target.size.x
+	var zone_rect := Rect2(Vector2(zone_left, 0.0), Vector2(zone_width, target.size.y))
+	target.draw_rect(zone_rect, Color(0.2, 0.8, 0.3, 1.0), true)
 
 	var needle_x := needle_pos * target.size.x
 	target.draw_line(Vector2(needle_x, 0.0), Vector2(needle_x, target.size.y), Color(1.0, 0.2, 0.2, 1.0), 4.0)

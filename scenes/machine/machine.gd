@@ -2,6 +2,7 @@ class_name Machine
 extends StaticBody2D
 
 signal durability_changed(value: float)
+signal repair_requested(machine: Machine)
 
 @export var max_durability: float = 100.0
 @export var drain_rate: float = 5.0
@@ -61,11 +62,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if !key_event.pressed or key_event.echo:
 		return
 
-	if key_event.keycode == KEY_E and is_player_nearby and !is_in_repair:
-		var main := get_node_or_null("/root/Main")
-		if main != null and main.has_method("open_repair_popup"):
-			main.open_repair_popup(self)
-			get_viewport().set_input_as_handled()
+	if key_event.keycode == KEY_E and is_player_nearby:
+		repair_requested.emit(self)
+		get_viewport().set_input_as_handled()
 
 
 func _on_repair_zone_body_entered(body: Node) -> void:

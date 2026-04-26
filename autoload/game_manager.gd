@@ -39,11 +39,10 @@ func start_day() -> void:
 func end_day() -> void:
 	current_phase = Phase.END
 
-	var money_earned := 50
-	if PollutionManager.pollution < 40.0:
-		money_earned += 30
-
-	money_earned = max(0, money_earned - int(floor(minutes_above_threshold * 10.0)))
+	var base: int = 50
+	var bonus: int = 30 if PollutionManager.pollution < 40.0 else 0
+	var penalty: int = int(minutes_above_threshold) * 10
+	var money_earned: int = max(0, base + bonus - penalty)
 
 	money += money_earned
 	current_day += 1

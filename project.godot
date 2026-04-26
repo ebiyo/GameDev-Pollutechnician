@@ -17,8 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameManager="*uid://bgu7y44hq8es5"
-PollutionManager="*uid://br216ssqpwn0g"
+GameManager="*res://autoload/game_manager.gd"
+PollutionManager="*res://autoload/pollution_manager.gd"
+RepairManager="*res://autoload/repair_manager.gd"
 
 [input]
 
