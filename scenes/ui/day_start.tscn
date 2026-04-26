@@ -11,32 +11,29 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -190.0
-offset_top = -130.0
-offset_right = 190.0
-offset_bottom = 130.0
+offset_left = -220.0
+offset_top = -150.0
+offset_right = 220.0
+offset_bottom = 150.0
 alignment = 1
 theme_override_constants/separation = 10
 
 [node name="TitleLabel" type="Label" parent="VBoxContainer"]
-text = "Day 1 — Prepare"
+text = "Day 1 - Prepare"
 horizontal_alignment = 1
 
 [node name="MoneyLabel" type="Label" parent="VBoxContainer"]
 text = "Money: $0"
 horizontal_alignment = 1
 
-[node name="RainCardButton" type="Button" parent="VBoxContainer"]
-text = "Rain Card — $30: Add 1 card (-15 pollution when used)"
+[node name="OfferButton1" type="Button" parent="VBoxContainer"]
+text = "[Card] Rain Card - $30"
 
-[node name="RepairKitButton" type="Button" parent="VBoxContainer"]
-text = "Repair Kit — $50: Add 1 card (repair all machines when used)"
+[node name="OfferButton2" type="Button" parent="VBoxContainer"]
+text = "[Upgrade] Speed Boost - $40"
 
-[node name="SpeedBoostButton" type="Button" parent="VBoxContainer"]
-text = "Speed Boost — $40: +0.15 to needle speed permanently"
-
-[node name="RepairEfficiencyButton" type="Button" parent="VBoxContainer"]
-text = "Repair Efficiency — $45: +4 repair per hit permanently"
+[node name="OfferButton3" type="Button" parent="VBoxContainer"]
+text = "[Next Day] Shield - $55"
 
 [node name="StartDayButton" type="Button" parent="VBoxContainer"]
-text = "▶ Start Day"
+text = "Start Day"

@@ -12,8 +12,6 @@ class TimingBarControl extends Control:
 		if popup != null:
 			popup._draw_timing_bar(self)
 
-
-@export var repair_amount: float = 12.0
 @export var overclock_amount: float = 20.0
 
 var current_machine: Machine = null
@@ -109,7 +107,10 @@ func _handle_space_press() -> void:
 		else:
 			current_machine.overclock = minf(current_machine.overclock + overclock_amount, current_machine.max_overclock)
 	else:
-		current_machine.durability = maxf(current_machine.durability - 0.5, 0.0)
+		current_machine.durability = maxf(
+			current_machine.durability - GameManager.repair_miss_penalty,
+			0.0
+		)
 		_flash_durability_bar()
 
 	_randomize_hit_zone()
@@ -130,7 +131,7 @@ func _sync_bars() -> void:
 
 
 func _get_repair_amount() -> float:
-	return repair_amount + GameManager.repair_efficiency_bonus
+	return GameManager.get_current_repair_amount()
 
 
 func _handle_speed_adjust_input(delta: float) -> void:
@@ -159,7 +160,7 @@ func _get_hit_zone_size() -> float:
 
 	if current_machine.durability < current_machine.max_durability:
 		var fill_ratio := clampf(current_machine.durability / maxf(current_machine.max_durability, 0.001), 0.0, 1.0)
-		return lerpf(0.35, 0.06, fill_ratio)
+		return lerpf(0.35, 0.09, fill_ratio)
 
 	return 0.15
 

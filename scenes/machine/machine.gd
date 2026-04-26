@@ -43,7 +43,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if !is_in_repair:
-		durability = maxf(durability - drain_rate * delta, 0.0)
+		durability = maxf(
+			durability - (drain_rate * GameManager.machine_drain_multiplier * delta),
+			0.0
+		)
 
 	if overclock > 0.0:
 		var overclock_drain_multiplier: float = 0.35 if is_in_repair else 1.0
@@ -95,7 +98,11 @@ func get_efficiency() -> float:
 
 	var efficiency: float = durability / max_durability
 	if overclock > 0.0:
-		efficiency = clampf(efficiency + 0.4, 0.0, 1.4)
+		efficiency = clampf(
+			efficiency + GameManager.overclock_efficiency_bonus,
+			0.0,
+			1.0 + GameManager.overclock_efficiency_bonus
+		)
 
 	if is_efficiency_penalised:
 		efficiency *= 0.5

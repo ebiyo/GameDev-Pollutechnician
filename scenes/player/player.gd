@@ -9,5 +9,5 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	var input_vector := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	velocity = input_vector * SPEED
+	velocity = input_vector * SPEED * GameManager.player_speed_multiplier
 	move_and_slide()

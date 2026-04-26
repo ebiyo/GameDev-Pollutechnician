@@ -1,9 +1,11 @@
 extends CanvasLayer
 
 const INGAME_TOTAL_MINUTES: float = 600.0
+const INGAME_START_HOUR: int = 8
 const CARD_ITEM_SCENE := preload("res://scenes/ui/card_item.tscn")
 
 @onready var pollution_bar: ProgressBar = $PollutionBar
+@onready var threshold_marker: ColorRect = $PollutionBar/ThresholdMarker
 @onready var time_label: Label = $TimeLabel
 @onready var day_label: Label = $DayLabel
 @onready var day_end_hint_label: Label = $DayEndHintLabel
@@ -13,18 +15,22 @@ const CARD_ITEM_SCENE := preload("res://scenes/ui/card_item.tscn")
 @onready var card_tooltip_label: Label = $CardTooltipLabel
 @onready var cards_root: Control = $CardsRoot
 @onready var cards_container: HBoxContainer = $CardsRoot/CardsContainer
+@onready var cheat_speed_button: Button = $CheatSpeedButton
 
-var _displayed_rain_cards: int = -1
-var _displayed_repair_kit_cards: int = -1
+var _displayed_card_signature: String = ""
 var _event_log_signature: String = ""
 
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	PollutionManager.pollution_changed.connect(_on_pollution_changed)
 	GameManager.day_started.connect(_on_day_started)
 	GameManager.day_ended.connect(_on_day_ended)
 	GameManager.game_won.connect(_on_game_won)
+	pollution_bar.resized.connect(_update_threshold_marker)
+	cheat_speed_button.pressed.connect(_on_cheat_end_day_button_pressed)
 	_on_pollution_changed(PollutionManager.pollution)
+	_update_threshold_marker()
 	_set_timer_visible(false)
 	_update_day_label()
 	_update_time_label()
@@ -32,6 +38,7 @@ func _ready() -> void:
 	_update_day_end_hint()
 	_update_event_log()
 	_update_card_panel()
+
 
 func _process(_delta: float) -> void:
 	if GameManager.current_phase == GameManager.Phase.ACTIVE and time_label.visible:
@@ -46,7 +53,7 @@ func _on_pollution_changed(value: float) -> void:
 
 	if value < 50.0:
 		pollution_bar.modulate = Color(0.35, 1.0, 0.35, 1.0)
-	elif value < 80.0:
+	elif value < PollutionManager.over_limit_pollution_threshold:
 		pollution_bar.modulate = Color(1.0, 0.9, 0.25, 1.0)
 	else:
 		pollution_bar.modulate = Color(1.0, 0.35, 0.35, 1.0)
@@ -73,6 +80,7 @@ func _set_timer_visible(is_visible: bool) -> void:
 	day_end_hint_label.visible = is_visible
 	over_threshold_label.visible = is_visible
 	cards_root.visible = is_visible
+	cheat_speed_button.visible = is_visible
 	card_tooltip_label.visible = false
 	if !is_visible:
 		event_log_panel.visible = false
@@ -86,20 +94,37 @@ func _update_time_label() -> void:
 	var elapsed_fraction := 1.0 - (GameManager.day_timer / maxf(GameManager.day_duration, 0.001))
 	var elapsed_minutes := elapsed_fraction * INGAME_TOTAL_MINUTES
 	var total_minutes := int(elapsed_minutes)
-	var hour := 8 + total_minutes / 60
+	var hour := INGAME_START_HOUR + total_minutes / 60
 	var minute := total_minutes % 60
 	time_label.text = "%02d:%02d" % [hour, minute]
 
 
 func _update_day_end_hint() -> void:
-	day_end_hint_label.text = "day ends at 18:00"
+	var end_total_minutes := INGAME_START_HOUR * 60 + int(INGAME_TOTAL_MINUTES)
+	var end_hour := end_total_minutes / 60
+	var end_minute := end_total_minutes % 60
+	day_end_hint_label.text = "day ends at %02d:%02d" % [end_hour, end_minute]
 
 
 func _update_over_threshold_label() -> void:
 	over_threshold_label.text = "Over limit: %d / %d min" % [
-		int(PollutionManager.ingame_minutes_over),
+		int(PollutionManager.cumulative_minutes_over_threshold),
 		int(PollutionManager.lose_threshold_minutes)
 	]
+
+
+func _update_threshold_marker() -> void:
+	var threshold_ratio := PollutionManager.over_limit_pollution_threshold / maxf(pollution_bar.max_value, 0.001)
+	var marker_x := (pollution_bar.size.x * threshold_ratio) - (threshold_marker.size.x * 0.5)
+	threshold_marker.position = Vector2(marker_x, 0.0)
+	threshold_marker.size.y = pollution_bar.size.y
+
+
+func _on_cheat_end_day_button_pressed() -> void:
+	if GameManager.current_phase != GameManager.Phase.ACTIVE:
+		return
+
+	GameManager.end_day()
 
 
 func _update_event_log() -> void:
@@ -118,11 +143,11 @@ func _update_card_panel() -> void:
 	cards_root.visible = time_label.visible and has_any_cards
 	cards_container.visible = has_any_cards
 
-	if _displayed_rain_cards == GameManager.rain_cards and _displayed_repair_kit_cards == GameManager.repair_kit_cards:
+	var card_signature := GameManager.get_card_inventory_signature()
+	if _displayed_card_signature == card_signature:
 		return
 
-	_displayed_rain_cards = GameManager.rain_cards
-	_displayed_repair_kit_cards = GameManager.repair_kit_cards
+	_displayed_card_signature = card_signature
 	_rebuild_cards()
 
 
@@ -130,23 +155,16 @@ func _rebuild_cards() -> void:
 	for child in cards_container.get_children():
 		child.queue_free()
 
-	for i in range(GameManager.rain_cards):
-		cards_container.add_child(_create_card_item(
-			GameManager.RAIN_CARD_TYPE,
-			"Rain Card",
-			"Instantly reduces pollution by 15."
-		))
-
-	for i in range(GameManager.repair_kit_cards):
-		cards_container.add_child(_create_card_item(
-			GameManager.REPAIR_KIT_CARD_TYPE,
-			"Repair Kit",
-			"Repairs all machines to full durability."
-		))
+	for card_type in GameManager.get_card_types():
+		for i in range(GameManager.get_card_count(card_type)):
+			cards_container.add_child(_create_card_item(
+				card_type,
+				GameManager.get_card_name(card_type),
+				GameManager.get_card_description(card_type)
+			))
 
 
 func _create_card_item(card_type: String, card_name: String, description: String) -> PanelContainer:
-	print("CREATE CARD:", card_name)
 	var card := CARD_ITEM_SCENE.instantiate() as CardItem
 	card.size_flags_vertical = Control.SIZE_SHRINK_END
 	card.setup(card_type, card_name, description)

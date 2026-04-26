@@ -27,7 +27,7 @@ horizontal_alignment = 1
 
 [node name="SpeedLabel" type="Label" parent="Panel/VBoxContainer" unique_id=7474269]
 layout_mode = 2
-text = "Needle Speed: 0.35   Repair: +18.0"
+text = "Needle Speed: 0.35   Repair: +12.0"
 horizontal_alignment = 1
 
 [node name="TimingArea" type="Control" parent="Panel/VBoxContainer" unique_id=1033361489]

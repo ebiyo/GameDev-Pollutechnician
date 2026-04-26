@@ -25,6 +25,14 @@ offset_top = 36.0
 offset_right = 160.0
 offset_bottom = 60.0
 
+[node name="ThresholdMarker" type="ColorRect" parent="PollutionBar"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 4.0
+offset_bottom = 24.0
+mouse_filter = 2
+color = Color(0.95, 0.15, 0.15, 0.95)
+
 [node name="EventLogPanel" type="Control" parent="." unique_id=1071374907]
 visible = false
 layout_mode = 3
@@ -120,9 +128,17 @@ modulate = Color(1, 0.45, 0.45, 1)
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -220.0
+offset_left = -280.0
 offset_top = 108.0
 offset_right = -12.0
 offset_bottom = 132.0
-text = "Over limit: 0.0 / 20.0 min"
+text = "Over limit: 0 / 200 min"
 horizontal_alignment = 2
+
+[node name="CheatSpeedButton" type="Button" parent="."]
+anchors_preset = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 112.0
+offset_bottom = 40.0
+text = "Cheat: End Day"

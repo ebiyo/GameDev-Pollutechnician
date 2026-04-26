@@ -12,3 +12,7 @@ func speed_up() -> void:
 
 func slow_down() -> void:
 	needle_speed = clampf(needle_speed - 0.08, MIN_SPEED, MAX_SPEED)
+
+
+func reset_run() -> void:
+	needle_speed = 0.35

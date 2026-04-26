@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/day_end.tscn" id="5_2q85e"]
 [ext_resource type="PackedScene" path="res://scenes/ui/day_start.tscn" id="6_4hp2r"]
 [ext_resource type="PackedScene" path="res://scenes/ui/win.tscn" id="6_cnmbu"]
+[ext_resource type="PackedScene" path="res://scenes/ui/title_screen.tscn" id="7_0e0so"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
 size = Vector2(1152, 32)
@@ -79,3 +80,5 @@ position = Vector2(576, 500)
 [node name="DayStart" parent="." instance=ExtResource("6_4hp2r")]
 
 [node name="Win" parent="." unique_id=579178099 instance=ExtResource("6_cnmbu")]
+
+[node name="TitleScreen" parent="." instance=ExtResource("7_0e0so")]

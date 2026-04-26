@@ -16,19 +16,19 @@ const EVENT_POOL: Array[Dictionary] = [
 		"name": "Machine Surge",
 		"desc": "One machine drains twice as fast.",
 		"effect": "machine_surge",
-		"duration": 12.0
+		"duration": 24.0
 	},
 	{
 		"name": "Clean Air",
 		"desc": "A breeze clears the air.",
 		"effect": "pollution_drop",
-		"value": 12.0
+		"value": 10.0
 	},
 	{
 		"name": "Power Flicker",
 		"desc": "All machines lose efficiency briefly.",
 		"effect": "efficiency_drop",
-		"duration": 12.0
+		"duration": 24.0
 	}
 ]
 
@@ -50,6 +50,9 @@ func _process(delta: float) -> void:
 	_process_event_log(delta)
 
 	if GameManager.current_phase != GameManager.Phase.ACTIVE:
+		return
+
+	if GameManager.day_random_events_blocked:
 		return
 
 	event_timer -= delta
@@ -77,6 +80,8 @@ func _on_day_started() -> void:
 	_clear_active_effects()
 	event_log_entries.clear()
 	_reset_event_timer()
+	if GameManager.day_random_events_blocked:
+		_add_instant_log_entry("Shield", "random events blocked today")
 
 
 func _on_day_ended(_money_earned: int) -> void:
@@ -85,14 +90,15 @@ func _on_day_ended(_money_earned: int) -> void:
 
 
 func _reset_event_timer() -> void:
-	event_timer = randf_range(interval_min, interval_max)
+	event_timer = randf_range(GameManager.event_interval_min, GameManager.event_interval_max)
 
 
 func _trigger_random_event() -> void:
-	if EVENT_POOL.is_empty():
+	var available_events := _get_available_event_pool()
+	if available_events.is_empty():
 		return
 
-	var event_data: Dictionary = EVENT_POOL[randi() % EVENT_POOL.size()]
+	var event_data: Dictionary = available_events[randi() % available_events.size()]
 	_apply_event(event_data)
 	event_triggered.emit(String(event_data["name"]), String(event_data["desc"]))
 
@@ -146,6 +152,35 @@ func _apply_event(event_data: Dictionary) -> void:
 			_set_timed_log_entry(effect_name, "Power Flicker", "all machines at 50% efficiency")
 
 
+func log_instant_effect(label: String, detail: String) -> void:
+	_add_instant_log_entry(label, detail)
+
+
+func track_custom_timed_effect(
+	effect_name: String,
+	label: String,
+	detail: String,
+	duration_minutes: float,
+	color: Color = Color(0.65, 0.9, 1.0, 1.0)
+) -> void:
+	var remaining := maxf(duration_minutes, 0.0)
+
+	if active_effects.has(effect_name):
+		var effect_state: Dictionary = active_effects[effect_name]
+		remaining += float(effect_state.get("remaining", 0.0))
+
+	active_effects[effect_name] = {
+		"remaining": remaining,
+		"custom_only": true
+	}
+	_set_timed_log_entry(effect_name, label, detail)
+
+	for entry in event_log_entries:
+		if String(entry.get("effect_name", "")) == effect_name:
+			entry["color"] = color
+			return
+
+
 func _expire_effect(effect_name: String) -> void:
 	if !active_effects.has(effect_name):
 		return
@@ -189,6 +224,8 @@ func _reverse_effect(effect_name: String, effect_state: Dictionary) -> void:
 				var machine: Machine = machine_node as Machine
 				if machine != null:
 					machine.is_efficiency_penalised = false
+		_:
+			pass
 
 
 func get_event_log_entries() -> Array[Dictionary]:
@@ -324,3 +361,23 @@ func _format_machine_name(raw_name: String) -> String:
 		formatted += character
 
 	return formatted
+
+
+func _get_available_event_pool() -> Array[Dictionary]:
+	var available_events: Array[Dictionary] = []
+
+	for event_data in EVENT_POOL:
+		var effect_name: String = String(event_data.get("effect", ""))
+		var is_good_event := effect_name == "pollution_drop"
+		if is_good_event and !GameManager.good_events_enabled:
+			continue
+
+		available_events.append(event_data)
+
+	return available_events
+
+
+func reset_run() -> void:
+	_clear_active_effects()
+	event_log_entries.clear()
+	event_timer = 0.0
