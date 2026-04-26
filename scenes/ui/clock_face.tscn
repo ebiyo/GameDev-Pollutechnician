@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/clock_face.gd" id="1_0bwpb"]
+
+[node name="ClockFace" type="Control"]
+custom_minimum_size = Vector2(80, 80)
+script = ExtResource("1_0bwpb")

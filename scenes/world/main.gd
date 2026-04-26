@@ -3,6 +3,7 @@ extends Node2D
 const GAME_OVER_SCENE := preload("res://scenes/ui/game_over.tscn")
 
 @onready var day_end_screen: CanvasLayer = $DayEnd
+@onready var repair_popup: RepairPopup = $RepairPopup
 @onready var win_screen: CanvasLayer = $Win
 
 var game_over_screen: CanvasLayer
@@ -31,3 +32,10 @@ func _on_day_ended(_money_earned: int) -> void:
 
 func _on_game_won() -> void:
 	win_screen.visible = true
+
+
+func open_repair_popup(machine: Machine) -> void:
+	if repair_popup.visible:
+		return
+
+	repair_popup.open(machine)

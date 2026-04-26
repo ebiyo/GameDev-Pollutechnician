@@ -5,8 +5,10 @@ signal game_over()
 
 var pollution: float = 0.0
 var base_increase_rate: float = 3.0
-var over_threshold_timer: float = 0.0
-var over_threshold_limit: float = 5.0
+var ingame_minutes_over: float = 0.0
+
+@export var lose_threshold_minutes: float = 2.0
+@export var ingame_day_minutes: float = 60.0
 
 
 func _ready() -> void:
@@ -28,8 +30,9 @@ func _process(delta: float) -> void:
 	pollution_changed.emit(pollution)
 
 	if pollution >= 100.0:
-		over_threshold_timer += delta
-		if over_threshold_timer > over_threshold_limit:
+		var time_scale := ingame_day_minutes / maxf(GameManager.day_duration, 0.001)
+		ingame_minutes_over += delta * time_scale
+		if ingame_minutes_over >= lose_threshold_minutes:
 			game_over.emit()
 	else:
-		over_threshold_timer = 0.0
+		ingame_minutes_over = 0.0

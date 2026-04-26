@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dwjdhjlkthv2g"]
+[gd_scene load_steps=4 format=3 uid="uid://dwjdhjlkthv2g"]
 
 [ext_resource type="Script" uid="uid://gadcr3x2vbms" path="res://scenes/machine/machine.gd" id="1"]
 
@@ -27,10 +27,22 @@ color = Color(0.35, 0.7, 1, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RepairZone" unique_id=442290292]
 shape = SubResource("CircleShape2D_1")
 
-[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1818674057]
-offset_left = -32.0
-offset_top = -56.0
-offset_right = 32.0
-offset_bottom = -44.0
+[node name="StatusBars" type="HBoxContainer" parent="."]
+offset_left = -36.0
+offset_top = -58.0
+offset_right = 36.0
+offset_bottom = -38.0
+theme_override_constants/separation = 6
+
+[node name="DurabilityBar" type="ProgressBar" parent="StatusBars"]
+custom_minimum_size = Vector2(0, 20)
+size_flags_horizontal = 3
 value = 100.0
 show_percentage = false
+modulate = Color(0.35, 1, 0.35, 1)
+
+[node name="OverclockBar" type="ProgressBar" parent="StatusBars"]
+custom_minimum_size = Vector2(0, 20)
+size_flags_horizontal = 3
+show_percentage = false
+modulate = Color(0.35, 0.65, 1, 1)
