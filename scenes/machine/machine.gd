@@ -18,10 +18,11 @@ var _last_durability: float = max_durability
 var _last_overclock: float = 0.0
 
 @onready var repair_zone: Area2D = $RepairZone
-@onready var durability_bar: ProgressBar = $StatusBars/DurabilityBar
-@onready var overclock_bar: ProgressBar = $StatusBars/OverclockBar
+@onready var durability_bar: ProgressBar = $DurabilityBar
+@onready var overclock_bar: ProgressBar = $OverclockBar
 @onready var interact_label: Label = $InteractLabel
 @onready var body_visual: ColorRect = $Body
+@onready var efficiency_overlay: ColorRect = $EfficiencyOverlay
 
 
 func _ready() -> void:
@@ -110,10 +111,16 @@ func get_efficiency() -> float:
 	return efficiency
 
 
+func set_efficiency_penalised(value: bool) -> void:
+	is_efficiency_penalised = value
+	_update_status_display()
+
+
 func _update_status_display() -> void:
 	durability_bar.value = durability
 	overclock_bar.value = overclock
-	body_visual.modulate = Color.RED if durability < 20.0 else Color.WHITE
+	body_visual.color = Color(1.0, 0.15, 0.15, 1.0) if durability < 20.0 else Color(0.35, 0.7, 1.0, 1.0)
+	efficiency_overlay.visible = is_efficiency_penalised
 
 
 func _update_interact_prompt() -> void:

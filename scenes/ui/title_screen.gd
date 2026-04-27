@@ -1,10 +1,10 @@
 extends CanvasLayer
 
-signal difficulty_selected(difficulty: int)
+const WORLD_SCENE_PATH := "res://scenes/world/main.tscn"
 
-@onready var easy_button: Button = $Panel/VBoxContainer/EasyButton
-@onready var normal_button: Button = $Panel/VBoxContainer/NormalButton
-@onready var hard_button: Button = $Panel/VBoxContainer/HardButton
+@onready var easy_button: Button = $Center/Content/CardsRow/EasyCard/VBoxContainer/StartButton
+@onready var normal_button: Button = $Center/Content/CardsRow/NormalCard/VBoxContainer/StartButton
+@onready var hard_button: Button = $Center/Content/CardsRow/HardCard/VBoxContainer/StartButton
 
 
 func _ready() -> void:
@@ -15,12 +15,18 @@ func _ready() -> void:
 
 
 func _on_easy_button_pressed() -> void:
-	difficulty_selected.emit(GameManager.Difficulty.EASY)
+	_start_run(GameManager.Difficulty.EASY)
 
 
 func _on_normal_button_pressed() -> void:
-	difficulty_selected.emit(GameManager.Difficulty.NORMAL)
+	_start_run(GameManager.Difficulty.NORMAL)
 
 
 func _on_hard_button_pressed() -> void:
-	difficulty_selected.emit(GameManager.Difficulty.HARD)
+	_start_run(GameManager.Difficulty.HARD)
+
+
+func _start_run(difficulty: int) -> void:
+	get_tree().paused = false
+	GameManager.start_new_run(difficulty)
+	get_tree().change_scene_to_file(WORLD_SCENE_PATH)

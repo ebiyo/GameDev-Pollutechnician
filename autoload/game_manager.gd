@@ -272,6 +272,7 @@ func _repair_all_machines() -> void:
 			continue
 
 		machine.durability = machine.max_durability
+		machine.overclock = machine.max_overclock
 		machine.durability_changed.emit(machine.durability)
 
 

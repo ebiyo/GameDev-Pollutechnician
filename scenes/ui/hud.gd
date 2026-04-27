@@ -5,6 +5,7 @@ const INGAME_START_HOUR: int = 8
 const CARD_ITEM_SCENE := preload("res://scenes/ui/card_item.tscn")
 
 @onready var pollution_bar: ProgressBar = $PollutionBar
+@onready var pollution_bar_fill: StyleBoxFlat = pollution_bar.get_theme_stylebox("fill") as StyleBoxFlat
 @onready var threshold_marker: ColorRect = $PollutionBar/ThresholdMarker
 @onready var time_label: Label = $TimeLabel
 @onready var day_label: Label = $DayLabel
@@ -52,11 +53,11 @@ func _on_pollution_changed(value: float) -> void:
 	pollution_bar.value = value
 
 	if value < 50.0:
-		pollution_bar.modulate = Color(0.35, 1.0, 0.35, 1.0)
+		pollution_bar_fill.bg_color = Color(0.45, 0.75, 0.55, 1.0)
 	elif value < PollutionManager.over_limit_pollution_threshold:
-		pollution_bar.modulate = Color(1.0, 0.9, 0.25, 1.0)
+		pollution_bar_fill.bg_color = Color(0.85, 0.75, 0.40, 1.0)
 	else:
-		pollution_bar.modulate = Color(1.0, 0.35, 0.35, 1.0)
+		pollution_bar_fill.bg_color = Color(0.90, 0.38, 0.28, 1.0)
 
 
 func _on_day_started() -> void:
@@ -103,7 +104,7 @@ func _update_day_end_hint() -> void:
 	var end_total_minutes := INGAME_START_HOUR * 60 + int(INGAME_TOTAL_MINUTES)
 	var end_hour := end_total_minutes / 60
 	var end_minute := end_total_minutes % 60
-	day_end_hint_label.text = "day ends at %02d:%02d" % [end_hour, end_minute]
+	day_end_hint_label.text = "Day ends at %02d:%02d" % [end_hour, end_minute]
 
 
 func _update_over_threshold_label() -> void:

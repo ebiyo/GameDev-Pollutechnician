@@ -2,6 +2,14 @@
 
 [ext_resource type="Script" uid="uid://vbttb04tl0ov" path="res://scenes/ui/hud.gd" id="1"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud_bar_bg"]
+bg_color = Color(0.18, 0.22, 0.29, 0.95)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud_bar_fill"]
+bg_color = Color(1, 1, 1, 1)
+corner_detail = 1
+
 [node name="HUD" type="CanvasLayer" unique_id=31293835]
 script = ExtResource("1")
 
@@ -10,9 +18,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -80.0
-offset_top = 8.0
+offset_top = 20.0
 offset_right = 80.0
-offset_bottom = 31.0
+offset_bottom = 43.0
 text = "Pollution"
 horizontal_alignment = 1
 
@@ -20,14 +28,19 @@ horizontal_alignment = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -160.0
-offset_top = 36.0
-offset_right = 160.0
-offset_bottom = 60.0
+offset_left = -192.0
+offset_top = 48.0
+offset_right = 192.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.97, 0.98, 1, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.1, 0.14, 1)
+theme_override_constants/outline_size = 8
+theme_override_styles/background = SubResource("StyleBoxFlat_hud_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hud_bar_fill")
 
-[node name="ThresholdMarker" type="ColorRect" parent="PollutionBar"]
-offset_left = 0.0
-offset_top = 0.0
+[node name="ThresholdMarker" type="ColorRect" parent="PollutionBar" unique_id=943010372]
+layout_mode = 0
 offset_right = 4.0
 offset_bottom = 24.0
 mouse_filter = 2
@@ -39,10 +52,11 @@ layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 12.0
+offset_left = 16.0
 offset_top = -180.0
-offset_right = 320.0
+offset_right = 324.0
 offset_bottom = -12.0
+grow_vertical = 0
 
 [node name="EventLogEntries" type="VBoxContainer" parent="EventLogPanel" unique_id=949127173]
 layout_mode = 0
@@ -79,6 +93,8 @@ offset_left = -364.0
 offset_top = -190.0
 offset_right = -12.0
 offset_bottom = -12.0
+grow_horizontal = 0
+grow_vertical = 0
 
 [node name="CardsContainer" type="HBoxContainer" parent="CardsRoot" unique_id=7412560]
 layout_mode = 0
@@ -93,10 +109,11 @@ alignment = 2
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -140.0
+offset_left = -152.0
 offset_top = 12.0
-offset_right = -12.0
+offset_right = -24.0
 offset_bottom = 52.0
+grow_horizontal = 0
 theme_override_font_sizes/font_size = 28
 text = "08:00"
 horizontal_alignment = 2
@@ -105,9 +122,9 @@ horizontal_alignment = 2
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -140.0
+offset_left = -152.0
 offset_top = 54.0
-offset_right = -12.0
+offset_right = -24.0
 offset_bottom = 78.0
 text = "Day 1 / 3"
 horizontal_alignment = 2
@@ -116,29 +133,28 @@ horizontal_alignment = 2
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -170.0
+offset_left = -182.0
 offset_top = 80.0
-offset_right = -12.0
+offset_right = -24.0
 offset_bottom = 104.0
-text = "day ends at 18:00"
+text = "Day ends at 18:00"
 horizontal_alignment = 2
 
 [node name="OverThresholdLabel" type="Label" parent="." unique_id=2029323038]
-modulate = Color(1, 0.45, 0.45, 1)
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -280.0
-offset_top = 108.0
-offset_right = -12.0
-offset_bottom = 132.0
+modulate = Color(1, 0.85, 0.45, 1)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -180.0
+offset_top = 86.0
+offset_right = 180.0
+offset_bottom = 110.0
 text = "Over limit: 0 / 200 min"
-horizontal_alignment = 2
+horizontal_alignment = 1
 
-[node name="CheatSpeedButton" type="Button" parent="."]
-anchors_preset = 0
-offset_left = 12.0
-offset_top = 12.0
-offset_right = 112.0
-offset_bottom = 40.0
+[node name="CheatSpeedButton" type="Button" parent="." unique_id=1587264676]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 141.0
+offset_bottom = 47.0
 text = "Cheat: End Day"

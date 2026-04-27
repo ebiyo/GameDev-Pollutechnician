@@ -145,7 +145,7 @@ func _apply_event(event_data: Dictionary) -> void:
 			for machine_node in get_tree().get_nodes_in_group("machines"):
 				var machine: Machine = machine_node as Machine
 				if machine != null:
-					machine.is_efficiency_penalised = true
+					machine.set_efficiency_penalised(true)
 			active_effects[effect_name] = {
 				"remaining": duration
 			}
@@ -223,7 +223,7 @@ func _reverse_effect(effect_name: String, effect_state: Dictionary) -> void:
 			for machine_node in get_tree().get_nodes_in_group("machines"):
 				var machine: Machine = machine_node as Machine
 				if machine != null:
-					machine.is_efficiency_penalised = false
+					machine.set_efficiency_penalised(false)
 		_:
 			pass
 
