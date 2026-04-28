@@ -1,6 +1,6 @@
 extends Node
 
-signal event_triggered(name: String, desc: String)
+signal event_triggered(event_name: String, event_desc: String)
 
 const LOG_FADE_DURATION: float = 5.0
 

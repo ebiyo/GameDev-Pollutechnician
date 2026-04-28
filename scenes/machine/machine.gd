@@ -89,7 +89,7 @@ func _on_repair_zone_body_exited(body: Node) -> void:
 		_update_interact_prompt()
 
 
-func _on_durability_changed(value: float) -> void:
+func _on_durability_changed(_value: float) -> void:
 	_update_status_display()
 
 

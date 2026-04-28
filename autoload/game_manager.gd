@@ -7,6 +7,7 @@ signal day_started()
 signal day_ended(money_earned: int)
 signal game_won()
 
+const LATEST_RUNS_SAVE_PATH := "user://latest_runs.cfg"
 const MAX_CARDS: int = 5
 const RAIN_CARD_TYPE := "rain"
 const REPAIR_KIT_CARD_TYPE := "repair_kit"
@@ -119,11 +120,23 @@ var max_cards: int = MAX_CARDS
 var machine_drain_multiplier: float = 1.0
 var overclock_efficiency_bonus: float = 0.4
 var machine_efficiency_multiplier: float = 1.0
+var _latest_runs: Dictionary = {}
+var _run_day_end_pollution_values: Array[float] = []
+var _run_money_spent: int = 0
+var _run_bonus_money_earned: int = 0
+var _run_cards_purchased: Dictionary = {}
+var _run_upgrades_purchased: Dictionary = {}
+var _run_day_effects_purchased: Dictionary = {}
+var _run_result_recorded: bool = false
 var _card_counts := {
 	RAIN_CARD_TYPE: 0,
 	REPAIR_KIT_CARD_TYPE: 0,
 	FREEZE_CARD_TYPE: 0
 }
+
+
+func _ready() -> void:
+	_load_latest_runs()
 
 
 func start_new_run(difficulty: Difficulty) -> void:
@@ -157,6 +170,13 @@ func start_new_run(difficulty: Difficulty) -> void:
 	machine_drain_multiplier = float(config.get("machine_drain_multiplier", 1.0))
 	overclock_efficiency_bonus = float(config.get("overclock_efficiency_bonus", 0.4))
 	machine_efficiency_multiplier = float(config.get("machine_efficiency_multiplier", 1.0))
+	_run_day_end_pollution_values.clear()
+	_run_money_spent = 0
+	_run_bonus_money_earned = 0
+	_run_cards_purchased.clear()
+	_run_upgrades_purchased.clear()
+	_run_day_effects_purchased.clear()
+	_run_result_recorded = false
 
 	for card_type in get_card_types():
 		_card_counts[card_type] = 0
@@ -175,6 +195,22 @@ func get_total_cards() -> int:
 	for count_variant in _card_counts.values():
 		total += int(count_variant)
 	return total
+
+
+func get_all_difficulties() -> Array[int]:
+	return [Difficulty.EASY, Difficulty.NORMAL, Difficulty.HARD]
+
+
+func get_difficulty_display_name(difficulty: int) -> String:
+	var config: Dictionary = DIFFICULTY_CONFIGS.get(difficulty, DIFFICULTY_CONFIGS[Difficulty.EASY])
+	return String(config.get("name", "Easy"))
+
+
+func get_latest_run_data(difficulty: int) -> Dictionary:
+	var data: Variant = _latest_runs.get(difficulty, {})
+	if data is Dictionary:
+		return (data as Dictionary).duplicate(true)
+	return {}
 
 
 func get_card_types() -> Array[String]:
@@ -305,9 +341,11 @@ func end_day() -> void:
 	current_phase = Phase.END
 	day_pollution_rate_multiplier = 1.0
 	day_random_events_blocked = false
+	_run_day_end_pollution_values.append(PollutionManager.pollution)
 
 	var bonus: int = low_pollution_bonus if PollutionManager.pollution < low_pollution_bonus_threshold else 0
 	var money_earned: int = max(0, base_reward + bonus)
+	_run_bonus_money_earned += bonus
 
 	money += money_earned
 	current_day += 1
@@ -320,3 +358,101 @@ func end_day() -> void:
 
 func start_next_day() -> void:
 	start_day()
+
+
+func record_offer_purchase(offer: Dictionary) -> void:
+	var cost: int = int(offer.get("cost", 0))
+	var offer_name: String = String(offer.get("name", "Unknown"))
+	var group: String = String(offer.get("group", ""))
+
+	_run_money_spent += cost
+
+	match group:
+		"Card":
+			_increment_purchase_count(_run_cards_purchased, offer_name)
+		"Upgrade":
+			_increment_purchase_count(_run_upgrades_purchased, offer_name)
+		"Next Day":
+			_increment_purchase_count(_run_day_effects_purchased, offer_name)
+		_:
+			_increment_purchase_count(_run_day_effects_purchased, offer_name)
+
+
+func finalize_run(won: bool) -> void:
+	if _run_result_recorded:
+		return
+
+	_run_result_recorded = true
+
+	var pollution_samples := _get_run_pollution_samples(won)
+	var avg_pollution := 0.0
+	for sample in pollution_samples:
+		avg_pollution += sample
+
+	if !pollution_samples.is_empty():
+		avg_pollution /= pollution_samples.size()
+
+	var summary := {
+		"attempted": true,
+		"won": won,
+		"days_recorded": pollution_samples.size(),
+		"days_target": total_days,
+		"avg_pollution": avg_pollution,
+		"money": money,
+		"money_spent": _run_money_spent,
+		"bonus_money_earned": _run_bonus_money_earned,
+		"over_limit_minutes": PollutionManager.cumulative_minutes_over_threshold,
+		"over_limit_limit_minutes": PollutionManager.lose_threshold_minutes,
+		"cards_purchased": _run_cards_purchased.duplicate(true),
+		"upgrades_purchased": _run_upgrades_purchased.duplicate(true),
+		"day_effects_purchased": _run_day_effects_purchased.duplicate(true)
+	}
+
+	_latest_runs[current_difficulty] = summary
+	_save_latest_runs()
+
+
+func _get_run_pollution_samples(won: bool) -> Array[float]:
+	var samples: Array[float] = []
+	for value in _run_day_end_pollution_values:
+		samples.append(value)
+
+	if !won and current_phase == Phase.ACTIVE:
+		samples.append(PollutionManager.pollution)
+
+	return samples
+
+
+func _increment_purchase_count(target: Dictionary, key: String) -> void:
+	target[key] = int(target.get(key, 0)) + 1
+
+
+func _load_latest_runs() -> void:
+	_latest_runs.clear()
+
+	var config := ConfigFile.new()
+	var error := config.load(LATEST_RUNS_SAVE_PATH)
+	if error != OK:
+		return
+
+	for difficulty in get_all_difficulties():
+		var key := _get_difficulty_save_key(difficulty)
+		var value: Variant = config.get_value("latest_runs", key, {})
+		if value is Dictionary:
+			_latest_runs[difficulty] = (value as Dictionary).duplicate(true)
+
+
+func _save_latest_runs() -> void:
+	var config := ConfigFile.new()
+
+	for difficulty in get_all_difficulties():
+		if !_latest_runs.has(difficulty):
+			continue
+
+		config.set_value("latest_runs", _get_difficulty_save_key(difficulty), _latest_runs[difficulty])
+
+	config.save(LATEST_RUNS_SAVE_PATH)
+
+
+func _get_difficulty_save_key(difficulty: int) -> String:
+	return get_difficulty_display_name(difficulty).to_lower()

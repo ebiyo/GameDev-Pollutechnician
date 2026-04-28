@@ -149,11 +149,11 @@ func _get_offer_pool() -> Array[Dictionary]:
 	return offers
 
 
-func _make_offer(id: String, group: String, name: String, cost: int, description: String) -> Dictionary:
+func _make_offer(id: String, group: String, offer_name: String, cost: int, description: String) -> Dictionary:
 	return {
 		"id": id,
 		"group": group,
-		"name": name,
+		"name": offer_name,
 		"cost": cost,
 		"description": description
 	}
@@ -197,6 +197,7 @@ func _purchase_offer(offer: Dictionary) -> bool:
 			return false
 
 	GameManager.money -= cost
+	GameManager.record_offer_purchase(offer)
 	return true
 
 

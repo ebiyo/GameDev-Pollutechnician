@@ -19,22 +19,24 @@ func _ready() -> void:
 	day_end_screen.visible = false
 	day_start_screen.visible = false
 	win_screen.visible = false
-	get_tree().paused = false
+	_set_tree_paused(false)
 	GameManager.start_day()
 
 
 func _on_game_over() -> void:
+	GameManager.finalize_run(false)
+
 	if is_instance_valid(game_over_screen):
 		game_over_screen.visible = true
 		game_over_screen.process_mode = Node.PROCESS_MODE_ALWAYS
-		get_tree().paused = true
+		_set_tree_paused(true)
 		return
 
 	game_over_screen = GAME_OVER_SCENE.instantiate()
 	add_child(game_over_screen)
 	game_over_screen.process_mode = Node.PROCESS_MODE_ALWAYS
 	game_over_screen.visible = true
-	get_tree().paused = true
+	_set_tree_paused(true)
 
 
 func _on_day_ended(_money_earned: int) -> void:
@@ -43,15 +45,16 @@ func _on_day_ended(_money_earned: int) -> void:
 	day_end_screen.visible = false
 	day_start_screen.visible = true
 	day_start_screen.process_mode = Node.PROCESS_MODE_ALWAYS
-	get_tree().paused = true
+	_set_tree_paused(true)
 
 
 func _on_game_won() -> void:
 	if repair_popup.visible:
 		repair_popup.close()
+	GameManager.finalize_run(true)
 	win_screen.process_mode = Node.PROCESS_MODE_ALWAYS
 	win_screen.visible = true
-	get_tree().paused = true
+	_set_tree_paused(true)
 
 
 func open_repair_popup(machine: Machine) -> void:
@@ -70,3 +73,11 @@ func _connect_machine_signals() -> void:
 
 func _on_repair_popup_closed() -> void:
 	pass
+
+
+func _set_tree_paused(should_pause: bool) -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+
+	tree.paused = should_pause

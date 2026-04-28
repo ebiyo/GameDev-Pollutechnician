@@ -75,15 +75,15 @@ func _on_game_won() -> void:
 	_set_timer_visible(false)
 
 
-func _set_timer_visible(is_visible: bool) -> void:
-	time_label.visible = is_visible
-	day_label.visible = is_visible
-	day_end_hint_label.visible = is_visible
-	over_threshold_label.visible = is_visible
-	cards_root.visible = is_visible
-	cheat_speed_button.visible = is_visible
+func _set_timer_visible(should_show: bool) -> void:
+	time_label.visible = should_show
+	day_label.visible = should_show
+	day_end_hint_label.visible = should_show
+	over_threshold_label.visible = should_show
+	cards_root.visible = should_show
+	cheat_speed_button.visible = should_show
 	card_tooltip_label.visible = false
-	if !is_visible:
+	if !should_show:
 		event_log_panel.visible = false
 
 
@@ -99,14 +99,14 @@ func _update_time_label() -> void:
 	var elapsed_fraction := 1.0 - (GameManager.day_timer / maxf(GameManager.day_duration, 0.001))
 	var elapsed_minutes := elapsed_fraction * INGAME_TOTAL_MINUTES
 	var total_minutes := int(elapsed_minutes)
-	var hour := INGAME_START_HOUR + total_minutes / 60
+	var hour := INGAME_START_HOUR + int(total_minutes / 60.0)
 	var minute := total_minutes % 60
 	time_label.text = "%02d:%02d" % [hour, minute]
 
 
 func _update_day_end_hint() -> void:
 	var end_total_minutes := INGAME_START_HOUR * 60 + int(INGAME_TOTAL_MINUTES)
-	var end_hour := end_total_minutes / 60
+	var end_hour := int(end_total_minutes / 60.0)
 	var end_minute := end_total_minutes % 60
 	day_end_hint_label.text = "Day ends at %02d:%02d" % [end_hour, end_minute]
 
@@ -185,8 +185,8 @@ func _on_card_use_pressed(card_type: String) -> void:
 		_update_card_panel()
 
 
-func _on_card_hover_changed(description: String, is_visible: bool) -> void:
-	card_tooltip_label.visible = is_visible
+func _on_card_hover_changed(description: String, should_show: bool) -> void:
+	card_tooltip_label.visible = should_show
 	card_tooltip_label.text = description
 
 
