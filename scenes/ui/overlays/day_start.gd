@@ -3,6 +3,7 @@ extends CanvasLayer
 const OFFER_COUNT: int = 3
 const RAIN_CARD_COST: int = 30
 const REPAIR_KIT_CARD_COST: int = 50
+const SUPER_REPAIR_KIT_CARD_COST: int = 80
 const FREEZE_CARD_COST: int = 45
 const SPEED_BOOST_COST: int = 40
 const REPAIR_EFFICIENCY_COST: int = 45
@@ -91,7 +92,14 @@ func _get_offer_pool() -> Array[Dictionary]:
 			"Card",
 			"Repair Kit Card",
 			REPAIR_KIT_CARD_COST,
-			"Add 1 card (repair all machines when used)."
+			"Add 1 card (restore all machine durability when used)."
+		),
+		_make_offer(
+			"super_repair_kit_card",
+			"Card",
+			"Super Repair Kit Card",
+			SUPER_REPAIR_KIT_CARD_COST,
+			"Add 1 card (restore all machine durability and overclock when used)."
 		),
 		_make_offer(
 			"freeze_card",
@@ -172,6 +180,9 @@ func _purchase_offer(offer: Dictionary) -> bool:
 				return false
 		"repair_kit_card":
 			if !GameManager.add_card(GameManager.REPAIR_KIT_CARD_TYPE):
+				return false
+		"super_repair_kit_card":
+			if !GameManager.add_card(GameManager.SUPER_REPAIR_KIT_CARD_TYPE):
 				return false
 		"freeze_card":
 			if !GameManager.add_card(GameManager.FREEZE_CARD_TYPE):

@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/overlays/day_start.tscn" id="6_4hp2r"]
 [ext_resource type="PackedScene" uid="uid://cppa78g5gbnuo" path="res://scenes/ui/menus/win.tscn" id="6_cnmbu"]
 [ext_resource type="Texture2D" uid="uid://c5qn3pohn7edi" path="res://assets/Dungeon Gathering Free Version/Set 1.png" id="9_j0vxu"]
+[ext_resource type="Theme" uid="uid://dsdc1mip7myf7" path="res://assets/global_ui_theme.tres" id="10_theme"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ggrwn"]
 texture = ExtResource("9_j0vxu")
@@ -365,11 +366,44 @@ position = Vector2(576, 324)
 [node name="MachineA" parent="." unique_id=1724123503 instance=ExtResource("2")]
 position = Vector2(175, 230)
 
+[node name="MachineNameLabel" type="Label" parent="MachineA" unique_id=1113879993]
+offset_left = 32.0
+offset_top = 22.0
+offset_right = 64.0
+offset_bottom = 71.0
+theme = ExtResource("10_theme")
+theme_override_colors/font_color = Color(0.60784316, 0.67058825, 0.69803923, 1)
+theme_override_font_sizes/font_size = 48
+text = "A"
+horizontal_alignment = 1
+
 [node name="MachineB" parent="." unique_id=1589928272 instance=ExtResource("2")]
 position = Vector2(943, 229)
 
+[node name="MachineNameLabel" type="Label" parent="MachineB" unique_id=2085962052]
+offset_left = 32.0
+offset_top = 22.0
+offset_right = 64.0
+offset_bottom = 71.0
+theme = ExtResource("10_theme")
+theme_override_colors/font_color = Color(0.60784316, 0.67058825, 0.69803923, 1)
+theme_override_font_sizes/font_size = 48
+text = "B"
+horizontal_alignment = 1
+
 [node name="MachineC" parent="." unique_id=116840076 instance=ExtResource("2")]
 position = Vector2(566, 528)
+
+[node name="MachineNameLabel" type="Label" parent="MachineC" unique_id=1837345164]
+offset_left = 32.0
+offset_top = 22.0
+offset_right = 64.0
+offset_bottom = 71.0
+theme = ExtResource("10_theme")
+theme_override_colors/font_color = Color(0.60784316, 0.67058825, 0.69803923, 1)
+theme_override_font_sizes/font_size = 48
+text = "C"
+horizontal_alignment = 1
 
 [node name="HUD" parent="." unique_id=370247373 instance=ExtResource("3_8ib8m")]
 

@@ -1,7 +1,8 @@
-[gd_scene format=3 uid="uid://bil7n80kpeq8a"]
+[gd_scene load_steps=4 format=3 uid="uid://bil7n80kpeq8a"]
 
 [ext_resource type="Script" uid="uid://dqd5hiw6qvb72" path="res://scenes/ui/menus/tutorial.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://2ntnxop8s74" path="res://assets/tutorial/lena-denk-vO_RghTzvxE-unsplash.jpg" id="2"]
+[ext_resource type="Theme" path="res://assets/global_ui_theme.tres" id="3_theme"]
 
 [node name="Tutorial" type="CanvasLayer" unique_id=989069001]
 script = ExtResource("1")
@@ -14,6 +15,7 @@ color = Color(0.0470588, 0.0784314, 0.0862745, 1)
 [node name="Center" type="CenterContainer" parent="." unique_id=1607315255]
 offset_right = 1152.0
 offset_bottom = 648.0
+theme = ExtResource("3_theme")
 
 [node name="Content" type="VBoxContainer" parent="Center" unique_id=275584994]
 layout_mode = 2
@@ -25,7 +27,7 @@ layout_mode = 2
 [node name="TitleLabel" type="Label" parent="Center/Content/Header" unique_id=1208148408]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 34
 text = "Tutorial"
 horizontal_alignment = 1
 
@@ -63,13 +65,13 @@ alignment = 1
 
 [node name="TitleLabel" type="Label" parent="Center/Content/PageAspect/Pages/Page02" unique_id=1064044613]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 36
 text = "Page 2 Placeholder"
 horizontal_alignment = 1
 
 [node name="BodyLabel" type="Label" parent="Center/Content/PageAspect/Pages/Page02" unique_id=1250797193]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 text = "Duplicate a page node under Pages or replace this placeholder with your next image."
 horizontal_alignment = 1
 autowrap_mode = 3
@@ -86,13 +88,13 @@ alignment = 1
 
 [node name="TitleLabel" type="Label" parent="Center/Content/PageAspect/Pages/Page03" unique_id=745941402]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 36
 text = "Page 3 Placeholder"
 horizontal_alignment = 1
 
 [node name="BodyLabel" type="Label" parent="Center/Content/PageAspect/Pages/Page03" unique_id=1150419253]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 text = "Remove or duplicate pages here depending on how many tutorial screens you want."
 horizontal_alignment = 1
 autowrap_mode = 3
@@ -104,7 +106,7 @@ alignment = 1
 [node name="PageLabel" type="Label" parent="Center/Content/Footer" unique_id=1580237246]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 text = "Page 1 / 3"
 
 [node name="NavButtons" type="HBoxContainer" parent="Center/Content/Footer" unique_id=1363506327]
@@ -114,17 +116,17 @@ theme_override_constants/separation = 12
 [node name="PrevButton" type="Button" parent="Center/Content/Footer/NavButtons" unique_id=1436891574]
 custom_minimum_size = Vector2(56, 48)
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 31
 text = "<"
 
 [node name="NextButton" type="Button" parent="Center/Content/Footer/NavButtons" unique_id=857555274]
 custom_minimum_size = Vector2(56, 48)
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 31
 text = ">"
 
 [node name="BackButton" type="Button" parent="Center/Content/Footer" unique_id=1005423360]
 custom_minimum_size = Vector2(140, 48)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 text = "Back"

@@ -22,6 +22,10 @@ PollutionManager="*res://autoload/pollution_manager.gd"
 RepairManager="*res://autoload/repair_manager.gd"
 EventManager="*res://autoload/event_manager.gd"
 
+[gui]
+
+theme/custom="res://assets/global_ui_theme.tres"
+
 [input]
 
 ui_left={

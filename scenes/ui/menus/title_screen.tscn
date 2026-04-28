@@ -1,6 +1,7 @@
-[gd_scene format=3 uid="uid://xlu7a36avlug"]
+[gd_scene load_steps=3 format=3 uid="uid://xlu7a36avlug"]
 
 [ext_resource type="Script" uid="uid://bfwufuasm5o4g" path="res://scenes/ui/menus/title_screen.gd" id="1"]
+[ext_resource type="Theme" path="res://assets/global_ui_theme.tres" id="2_theme"]
 
 [node name="TitleScreen" type="CanvasLayer" unique_id=686927122]
 script = ExtResource("1")
@@ -27,6 +28,7 @@ color = Color(0.380392, 0.619608, 0.388235, 0.16)
 [node name="Center" type="CenterContainer" parent="." unique_id=406331142]
 offset_right = 1152.0
 offset_bottom = 648.0
+theme = ExtResource("2_theme")
 
 [node name="Content" type="VBoxContainer" parent="Center" unique_id=259073826]
 layout_mode = 2
@@ -35,14 +37,14 @@ alignment = 1
 
 [node name="TitleLabel" type="Label" parent="Center/Content" unique_id=500312681]
 layout_mode = 2
-theme_override_font_sizes/font_size = 56
+theme_override_font_sizes/font_size = 67
 text = "Pollutechnician"
 horizontal_alignment = 1
 
 [node name="SubtitleLabel" type="Label" parent="Center/Content" unique_id=2061083565]
 custom_minimum_size = Vector2(720, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 text = "Keep the city breathing, one machine at a time."
 horizontal_alignment = 1
 
@@ -54,13 +56,13 @@ alignment = 1
 [node name="PlayButton" type="Button" parent="Center/Content/Buttons" unique_id=516660632]
 custom_minimum_size = Vector2(260, 64)
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 29
 text = "Play"
 
 [node name="TutorialButton" type="Button" parent="Center/Content/Buttons" unique_id=1801121638]
 custom_minimum_size = Vector2(260, 64)
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 29
 text = "Tutorial"
 
 [node name="LatestRunButton" type="Button" parent="." unique_id=105110028]
@@ -70,5 +72,6 @@ offset_left = 32.0
 offset_top = -80.0
 offset_right = 220.0
 offset_bottom = -32.0
-theme_override_font_sizes/font_size = 20
+theme = ExtResource("2_theme")
+theme_override_font_sizes/font_size = 24
 text = "Latest Run"

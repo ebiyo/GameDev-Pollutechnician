@@ -210,6 +210,7 @@ func _rebuild_event_log_entries(rendered_entries: Array[Dictionary]) -> void:
 func _create_event_log_label(text: String, alpha: float, color: Color) -> Label:
 	var label := Label.new()
 	label.text = text
+	label.add_theme_font_size_override("font_size", 24)
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.modulate = Color(color.r, color.g, color.b, alpha)
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE

@@ -27,7 +27,7 @@ func _build_latest_run_details(difficulty: int) -> String:
 	if latest_run.is_empty():
 		return "Result: -\nDays Survived: -\nAvg Pollution/Day: -\nMoney Left: -\nMoney Spent: -\nBonus Money Earned: -\nOver limit: -\nCards Purchased: -\nUpgrades Purchased: -\nDay Effects Purchased: -"
 
-	return "Result: %s\nDays Survived: %d/%d\nAvg Pollution/Day: %s\nMoney Left: $%d\nMoney Spent: $%d\nBonus Money Earned: $%d\nOver limit: %s/%sm\nCards Purchased: %s\nUpgrades Purchased: %s\nDay Effects Purchased: %s" % [
+	return "Result: %s\nDays Survived: %d/%d\nAvg Pollution/Day: %s\nMoney Left: $%d\nMoney Spent: $%d\nBonus Money Earned: $%d\nOver limit: %s/%s min\nCards Purchased: %s\nUpgrades Purchased: %s\nDay Effects Purchased: %s" % [
 		"Win" if bool(latest_run.get("won", false)) else "Loss",
 		int(latest_run.get("days_recorded", 0)),
 		int(latest_run.get("days_target", 0)),

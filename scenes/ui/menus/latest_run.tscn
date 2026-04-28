@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://638oq2aajb4r"]
 
 [ext_resource type="Script" uid="uid://upw30qaj2fdd" path="res://scenes/ui/menus/latest_run.gd" id="1"]
+[ext_resource type="Theme" uid="uid://dsdc1mip7myf7" path="res://assets/global_ui_theme.tres" id="2_theme"]
 
 [node name="LatestRun" type="CanvasLayer" unique_id=1912627132]
 script = ExtResource("1")
@@ -27,6 +28,7 @@ color = Color(0.380392, 0.619608, 0.388235, 0.16)
 [node name="Center" type="CenterContainer" parent="." unique_id=1468595417]
 offset_right = 1152.0
 offset_bottom = 648.0
+theme = ExtResource("2_theme")
 
 [node name="Content" type="VBoxContainer" parent="Center" unique_id=1654789476]
 layout_mode = 2
@@ -35,14 +37,14 @@ alignment = 1
 
 [node name="TitleLabel" type="Label" parent="Center/Content" unique_id=571390655]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 48
 text = "Latest Run Records"
 horizontal_alignment = 1
 
 [node name="SubtitleLabel" type="Label" parent="Center/Content" unique_id=1101622861]
 custom_minimum_size = Vector2(760, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 22
 text = "See the most recent completed run on each difficulty."
 horizontal_alignment = 1
 
@@ -61,7 +63,7 @@ layout_mode = 2
 
 [node name="ModeLabel" type="Label" parent="Center/Content/CardsRow/EasyCard/VBoxContainer" unique_id=1493402702]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 36
 text = "Easy"
 horizontal_alignment = 1
 
@@ -78,7 +80,7 @@ custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 22
 text = "Easy"
 autowrap_mode = 3
 
@@ -92,7 +94,7 @@ layout_mode = 2
 
 [node name="ModeLabel" type="Label" parent="Center/Content/CardsRow/NormalCard/VBoxContainer" unique_id=345072953]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 36
 text = "Normal"
 horizontal_alignment = 1
 
@@ -109,7 +111,7 @@ custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 22
 text = "Normal"
 autowrap_mode = 3
 
@@ -123,7 +125,7 @@ layout_mode = 2
 
 [node name="ModeLabel" type="Label" parent="Center/Content/CardsRow/HardCard/VBoxContainer" unique_id=1148084582]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 36
 text = "Hard"
 horizontal_alignment = 1
 
@@ -140,12 +142,12 @@ custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 22
 text = "Hard"
 autowrap_mode = 3
 
 [node name="BackButton" type="Button" parent="Center/Content" unique_id=218970465]
 custom_minimum_size = Vector2(160, 52)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 36
 text = "Back"

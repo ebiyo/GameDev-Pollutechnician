@@ -11,6 +11,7 @@ const LATEST_RUNS_SAVE_PATH := "user://latest_runs.cfg"
 const MAX_CARDS: int = 5
 const RAIN_CARD_TYPE := "rain"
 const REPAIR_KIT_CARD_TYPE := "repair_kit"
+const SUPER_REPAIR_KIT_CARD_TYPE := "super_repair_kit"
 const FREEZE_CARD_TYPE := "freeze"
 const RAIN_CARD_POLLUTION_REDUCTION: float = 15.0
 const FREEZE_CARD_DURATION_MINUTES: float = 60.0
@@ -25,6 +26,10 @@ const CARD_DEFINITIONS := {
 	REPAIR_KIT_CARD_TYPE: {
 		"name": "Repair Kit Card",
 		"description": "Repairs all machines to full durability."
+	},
+	SUPER_REPAIR_KIT_CARD_TYPE: {
+		"name": "Super Repair Kit Card",
+		"description": "Repairs all machines to full durability and full overclock."
 	},
 	FREEZE_CARD_TYPE: {
 		"name": "Freeze Card",
@@ -131,6 +136,7 @@ var _run_result_recorded: bool = false
 var _card_counts := {
 	RAIN_CARD_TYPE: 0,
 	REPAIR_KIT_CARD_TYPE: 0,
+	SUPER_REPAIR_KIT_CARD_TYPE: 0,
 	FREEZE_CARD_TYPE: 0
 }
 
@@ -214,7 +220,7 @@ func get_latest_run_data(difficulty: int) -> Dictionary:
 
 
 func get_card_types() -> Array[String]:
-	return [RAIN_CARD_TYPE, REPAIR_KIT_CARD_TYPE, FREEZE_CARD_TYPE]
+	return [RAIN_CARD_TYPE, REPAIR_KIT_CARD_TYPE, SUPER_REPAIR_KIT_CARD_TYPE, FREEZE_CARD_TYPE]
 
 
 func get_card_count(card_type: String) -> int:
@@ -284,8 +290,13 @@ func use_card(card_type: String) -> bool:
 			return true
 		REPAIR_KIT_CARD_TYPE:
 			_card_counts[card_type] = get_card_count(card_type) - 1
-			_repair_all_machines()
+			_repair_all_machines_durability_only()
 			EventManager.log_instant_effect("Repair Kit Card", "all machines repaired")
+			return true
+		SUPER_REPAIR_KIT_CARD_TYPE:
+			_card_counts[card_type] = get_card_count(card_type) - 1
+			_repair_all_machines_full()
+			EventManager.log_instant_effect("Super Repair Kit Card", "all machines fully restored")
 			return true
 		FREEZE_CARD_TYPE:
 			_card_counts[card_type] = get_card_count(card_type) - 1
@@ -301,7 +312,17 @@ func use_card(card_type: String) -> bool:
 	return false
 
 
-func _repair_all_machines() -> void:
+func _repair_all_machines_durability_only() -> void:
+	for machine_node in get_tree().get_nodes_in_group("machines"):
+		var machine := machine_node as Machine
+		if machine == null:
+			continue
+
+		machine.durability = machine.max_durability
+		machine.durability_changed.emit(machine.durability)
+
+
+func _repair_all_machines_full() -> void:
 	for machine_node in get_tree().get_nodes_in_group("machines"):
 		var machine := machine_node as Machine
 		if machine == null:

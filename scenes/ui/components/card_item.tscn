@@ -1,10 +1,12 @@
-[gd_scene format=3 uid="uid://s7y3ta4cssc4"]
+[gd_scene load_steps=3 format=3 uid="uid://s7y3ta4cssc4"]
 
 [ext_resource type="Script" uid="uid://clnjl1gk7ia7q" path="res://scenes/ui/components/card_item.gd" id="1"]
+[ext_resource type="Theme" path="res://assets/global_ui_theme.tres" id="2_theme"]
 
 [node name="CardItem" type="PanelContainer" unique_id=1456972608]
 custom_minimum_size = Vector2(120, 132)
 script = ExtResource("1")
+theme = ExtResource("2_theme")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1957176270]
 layout_mode = 2

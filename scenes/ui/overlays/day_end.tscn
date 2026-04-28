@@ -1,6 +1,7 @@
-[gd_scene format=3 uid="uid://dcpytoslsfaa5"]
+[gd_scene load_steps=3 format=3 uid="uid://dcpytoslsfaa5"]
 
 [ext_resource type="Script" uid="uid://bho6f0grjvs1t" path="res://scenes/ui/overlays/day_end.gd" id="1"]
+[ext_resource type="Theme" path="res://assets/global_ui_theme.tres" id="2_theme"]
 
 [node name="DayEnd" type="CanvasLayer" unique_id=962562473]
 visible = false
@@ -16,6 +17,7 @@ offset_left = -150.0
 offset_top = -80.0
 offset_right = 150.0
 offset_bottom = -50.0
+theme = ExtResource("2_theme")
 text = "Day X Complete"
 horizontal_alignment = 1
 
@@ -29,6 +31,7 @@ offset_left = -150.0
 offset_top = -24.0
 offset_right = 150.0
 offset_bottom = 6.0
+theme = ExtResource("2_theme")
 text = "Money Earned: 0"
 horizontal_alignment = 1
 
@@ -42,4 +45,5 @@ offset_left = -70.0
 offset_top = 24.0
 offset_right = 70.0
 offset_bottom = 55.0
+theme = ExtResource("2_theme")
 text = "Next Day"
