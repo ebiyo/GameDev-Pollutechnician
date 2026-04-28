@@ -1,20 +1,73 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://bvia2qmt7vjkd"]
 
-[ext_resource type="Script" path="res://scenes/player/player.gd" id="1"]
+[ext_resource type="Script" uid="uid://cyc77lhrj7tjt" path="res://scenes/player/player.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://da2fpc742sm1i" path="res://assets/sprites/techinican.png" id="2_dovo2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
-size = Vector2(32, 48)
+size = Vector2(44, 68)
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmlin"]
+atlas = ExtResource("2_dovo2")
+region = Rect2(16, 0, 16, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvxji"]
+atlas = ExtResource("2_dovo2")
+region = Rect2(0, 0, 16, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p47bc"]
+atlas = ExtResource("2_dovo2")
+region = Rect2(16, 0, 16, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75vfm"]
+atlas = ExtResource("2_dovo2")
+region = Rect2(32, 0, 16, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0owmy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmlin")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lvxji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p47bc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75vfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p47bc")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D" unique_id=798079002]
 script = ExtResource("1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1610942906]
+position = Vector2(2, 6)
 shape = SubResource("RectangleShape2D_1")
 
-[node name="Body" type="ColorRect" parent="."]
+[node name="Body" type="ColorRect" parent="." unique_id=1150273180]
+visible = false
 offset_left = -16.0
 offset_top = -24.0
 offset_right = 16.0
 offset_bottom = 24.0
-color = Color(0.2, 0.95, 0.45, 1)
 mouse_filter = 2
+color = Color(0.2, 0.95, 0.45, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1082633066]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_0owmy")
+animation = &"walk"
+frame_progress = 0.101334274

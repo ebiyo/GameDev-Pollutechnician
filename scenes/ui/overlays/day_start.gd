@@ -1,11 +1,11 @@
 extends CanvasLayer
 
 const OFFER_COUNT: int = 3
-const RAIN_CARD_COST: int = 30
-const REPAIR_KIT_CARD_COST: int = 50
-const SUPER_REPAIR_KIT_CARD_COST: int = 80
-const FREEZE_CARD_COST: int = 45
-const SPEED_BOOST_COST: int = 40
+const RAIN_CARD_COST: int = 35
+const REPAIR_KIT_CARD_COST: int = 45
+const SUPER_REPAIR_KIT_CARD_COST: int = 75
+const FREEZE_CARD_COST: int = 50
+const SPEED_BOOST_COST: int = 30
 const REPAIR_EFFICIENCY_COST: int = 45
 const CAR_FREE_DAY_COST: int = 35
 const SHIELD_COST: int = 55
