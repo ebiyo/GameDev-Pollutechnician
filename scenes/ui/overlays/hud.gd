@@ -2,7 +2,7 @@ extends CanvasLayer
 
 const INGAME_TOTAL_MINUTES: float = 600.0
 const INGAME_START_HOUR: int = 8
-const CARD_ITEM_SCENE := preload("res://scenes/ui/card_item.tscn")
+const CARD_ITEM_SCENE := preload("res://scenes/ui/components/card_item.tscn")
 
 @onready var pollution_bar: ProgressBar = $PollutionBar
 @onready var pollution_bar_fill: StyleBoxFlat = pollution_bar.get_theme_stylebox("fill") as StyleBoxFlat
@@ -88,7 +88,11 @@ func _set_timer_visible(is_visible: bool) -> void:
 
 
 func _update_day_label() -> void:
-	day_label.text = "Day %d / %d" % [GameManager.current_day, GameManager.total_days]
+	day_label.text = "%s - Day %d / %d" % [
+		GameManager.difficulty_name,
+		GameManager.current_day,
+		GameManager.total_days
+	]
 
 
 func _update_time_label() -> void:

@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://bvjiehlkssu37"]
+[gd_scene format=3 uid="uid://dfe5wjesd2jgn"]
 
-[ext_resource type="Script" path="res://scenes/ui/repair_popup.gd" id="1_i5ki6"]
+[ext_resource type="Script" uid="uid://cdi5tljjstj0p" path="res://scenes/ui/popups/repair_popup.gd" id="1_i5ki6"]
 
 [node name="RepairPopup" type="CanvasLayer" unique_id=1107602296]
 script = ExtResource("1_i5ki6")

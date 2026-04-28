@@ -11,7 +11,10 @@ func _ready() -> void:
 
 
 func _on_day_ended(money_earned: int) -> void:
-	title_label.text = "Day %d Complete" % (GameManager.current_day - 1)
+	title_label.text = "%s - Day %d Complete" % [
+		GameManager.difficulty_name,
+		GameManager.current_day - 1
+	]
 	money_label.text = "Money Earned: %d" % money_earned
 
 

@@ -221,7 +221,10 @@ func _can_buy_offer(offer: Dictionary) -> bool:
 
 
 func _update_labels() -> void:
-	title_label.text = "Day %d - Prepare" % GameManager.current_day
+	title_label.text = "%s - Day %d - Prepare" % [
+		GameManager.difficulty_name,
+		GameManager.current_day
+	]
 	money_label.text = "Money: $%d   Repair: +%.1f/hit   Cards: %d/%d   Walk: x%.1f" % [
 		GameManager.money,
 		GameManager.get_current_repair_amount(),

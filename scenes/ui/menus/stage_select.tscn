@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://dm4qpsx53agdf"]
+
+[ext_resource type="Script" uid="uid://bbfqrdi6k35b6" path="res://scenes/ui/menus/stage_select.gd" id="1"]
+
+[node name="StageSelect" type="CanvasLayer" unique_id=2069855226]
+script = ExtResource("1")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=1061645828]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.0470588, 0.0784314, 0.0862745, 1)
+
+[node name="Center" type="CenterContainer" parent="." unique_id=1724485218]
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Content" type="VBoxContainer" parent="Center" unique_id=1419603321]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="Center/Content" unique_id=231895418]
+layout_mode = 2
+theme_override_font_sizes/font_size = 42
+text = "Select Stage"
+horizontal_alignment = 1
+
+[node name="SubtitleLabel" type="Label" parent="Center/Content" unique_id=92468059]
+custom_minimum_size = Vector2(760, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Choose a run you want to tackle"
+horizontal_alignment = 1
+
+[node name="CardsRow" type="HBoxContainer" parent="Center/Content" unique_id=1767429413]
+layout_mode = 2
+theme_override_constants/separation = 22
+alignment = 1
+
+[node name="EasyCard" type="PanelContainer" parent="Center/Content/CardsRow" unique_id=1553856887]
+custom_minimum_size = Vector2(260, 320)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Center/Content/CardsRow/EasyCard" unique_id=692014203]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ModeLabel" type="Label" parent="Center/Content/CardsRow/EasyCard/VBoxContainer" unique_id=1741915802]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Easy"
+horizontal_alignment = 1
+
+[node name="DaysLabel" type="Label" parent="Center/Content/CardsRow/EasyCard/VBoxContainer" unique_id=1375431388]
+layout_mode = 2
+text = "3 days"
+horizontal_alignment = 1
+
+[node name="SummaryLabel" type="Label" parent="Center/Content/CardsRow/EasyCard/VBoxContainer" unique_id=2011235764]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+text = "Forgiving setup, more card room, and more casual."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Spacer" type="Control" parent="Center/Content/CardsRow/EasyCard/VBoxContainer" unique_id=1096942650]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StartButton" type="Button" parent="Center/Content/CardsRow/EasyCard/VBoxContainer" unique_id=1712113279]
+custom_minimum_size = Vector2(180, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Start Easy"
+
+[node name="NormalCard" type="PanelContainer" parent="Center/Content/CardsRow" unique_id=1873200953]
+custom_minimum_size = Vector2(260, 320)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Center/Content/CardsRow/NormalCard" unique_id=1655107478]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ModeLabel" type="Label" parent="Center/Content/CardsRow/NormalCard/VBoxContainer" unique_id=2006621766]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Normal"
+horizontal_alignment = 1
+
+[node name="DaysLabel" type="Label" parent="Center/Content/CardsRow/NormalCard/VBoxContainer" unique_id=431952368]
+layout_mode = 2
+text = "7 days"
+horizontal_alignment = 1
+
+[node name="SummaryLabel" type="Label" parent="Center/Content/CardsRow/NormalCard/VBoxContainer" unique_id=1118345985]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+text = "Longer run with tighter economy and more consistent pressure."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Spacer" type="Control" parent="Center/Content/CardsRow/NormalCard/VBoxContainer" unique_id=1744731969]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StartButton" type="Button" parent="Center/Content/CardsRow/NormalCard/VBoxContainer" unique_id=1952546671]
+custom_minimum_size = Vector2(180, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Start Normal"
+
+[node name="HardCard" type="PanelContainer" parent="Center/Content/CardsRow" unique_id=697361920]
+custom_minimum_size = Vector2(260, 320)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Center/Content/CardsRow/HardCard" unique_id=1860534951]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ModeLabel" type="Label" parent="Center/Content/CardsRow/HardCard/VBoxContainer" unique_id=1598887592]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Hard"
+horizontal_alignment = 1
+
+[node name="DaysLabel" type="Label" parent="Center/Content/CardsRow/HardCard/VBoxContainer" unique_id=1312490197]
+layout_mode = 2
+text = "7 days"
+horizontal_alignment = 1
+
+[node name="SummaryLabel" type="Label" parent="Center/Content/CardsRow/HardCard/VBoxContainer" unique_id=1239263750]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+text = "Harshest run with fewer safety nets and no helpful random events."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Spacer" type="Control" parent="Center/Content/CardsRow/HardCard/VBoxContainer" unique_id=2049167147]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StartButton" type="Button" parent="Center/Content/CardsRow/HardCard/VBoxContainer" unique_id=949693921]
+custom_minimum_size = Vector2(180, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Start Hard"
+
+[node name="BackButton" type="Button" parent="Center/Content" unique_id=1579695105]
+custom_minimum_size = Vector2(160, 52)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Back"

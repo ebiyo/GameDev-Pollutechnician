@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://c6t0u1xc2ifgl"]
+[gd_scene format=3 uid="uid://dcpytoslsfaa5"]
 
-[ext_resource type="Script" path="res://scenes/ui/day_end.gd" id="1"]
+[ext_resource type="Script" uid="uid://bho6f0grjvs1t" path="res://scenes/ui/overlays/day_end.gd" id="1"]
 
 [node name="DayEnd" type="CanvasLayer" unique_id=962562473]
 visible = false

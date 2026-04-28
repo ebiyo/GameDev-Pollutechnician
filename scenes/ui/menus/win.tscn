@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://cr05v63kjm7tg"]
+[gd_scene format=3 uid="uid://cppa78g5gbnuo"]
 
-[ext_resource type="Script" path="res://scenes/ui/win.gd" id="1"]
+[ext_resource type="Script" uid="uid://dcy8go06ihmsg" path="res://scenes/ui/menus/win.gd" id="1"]
 
 [node name="Win" type="CanvasLayer" unique_id=154004836]
 visible = false

@@ -1,6 +1,6 @@
 extends Node2D
 
-const GAME_OVER_SCENE := preload("res://scenes/ui/game_over.tscn")
+const GAME_OVER_SCENE := preload("res://scenes/ui/menus/game_over.tscn")
 
 @onready var day_end_screen: CanvasLayer = $DayEnd
 @onready var day_start_screen: CanvasLayer = $DayStart

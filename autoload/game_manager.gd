@@ -44,7 +44,7 @@ const DIFFICULTY_CONFIGS := {
 		"base_pollution_rate": 3.0,
 		"machine_drain_multiplier": 1.0,
 		"overclock_efficiency_bonus": 0.4,
-		"machine_efficiency_multiplier": 1.0,
+		"machine_efficiency_multiplier": 1.1,
 		"over_limit_threshold": 80.0,
 		"cumulative_limit_minutes": 200.0,
 		"good_events_enabled": true,

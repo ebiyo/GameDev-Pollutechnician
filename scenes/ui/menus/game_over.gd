@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-const TITLE_SCENE_PATH := "res://scenes/ui/title_screen.tscn"
+const TITLE_SCENE_PATH := "res://scenes/ui/menus/title_screen.tscn"
 
 @onready var restart_button: Button = $RestartButton
 
