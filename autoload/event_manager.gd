@@ -9,8 +9,8 @@ const EVENT_POOL: Array[Dictionary] = [
 		"name": "Building Fire",
 		"desc": "A nearby fire spikes pollution.",
 		"effect": "pollution_boost",
-		"value": 6.0,
-		"duration": 24.0
+		"value": 5.0,
+		"duration": 20.0
 	},
 	{
 		"name": "Machine Surge",
@@ -216,8 +216,9 @@ func _reverse_effect(effect_name: String, effect_state: Dictionary) -> void:
 			var value: float = float(effect_state.get("value", 0.0))
 			PollutionManager.base_increase_rate -= value
 		"machine_surge":
-			var surged_machine: Machine = effect_state.get("machine", null) as Machine
-			if surged_machine != null and is_instance_valid(surged_machine):
+			var machine_ref: Variant = effect_state.get("machine", null)
+			if machine_ref != null and is_instance_valid(machine_ref):
+				var surged_machine := machine_ref as Machine
 				surged_machine.drain_rate = float(effect_state.get("original_drain_rate", surged_machine.drain_rate))
 		"efficiency_drop":
 			for machine_node in get_tree().get_nodes_in_group("machines"):

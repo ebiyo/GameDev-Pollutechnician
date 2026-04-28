@@ -49,7 +49,7 @@ text = "Press E to interact"
 horizontal_alignment = 1
 
 [node name="DurabilityBar" type="ProgressBar" parent="." unique_id=356594987]
-modulate = Color(0.35, 1, 0.35, 1)
+modulate = Color(0.2, 0.94902, 0.45098, 1)
 offset_left = 20.0
 offset_top = -28.0
 offset_right = 76.0

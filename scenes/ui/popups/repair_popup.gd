@@ -21,17 +21,19 @@ var hit_zone_center: float = 0.5
 var timing_bar: Control
 var _durability_flash_tween: Tween = null
 var _speed_adjust_timer: float = 0.0
+var _durability_bar_base_modulate: Color = Color(1.0, 1.0, 1.0, 1.0)
 
 const SPEED_ADJUST_INTERVAL: float = 0.08
 
-@onready var machine_label: Label = $Panel/VBoxContainer/MachineLabel
-@onready var speed_label: Label = $Panel/VBoxContainer/SpeedLabel
-@onready var durability_bar: ProgressBar = $Panel/VBoxContainer/Bars/DurabilityRow/DurabilityBar
-@onready var overclock_bar: ProgressBar = $Panel/VBoxContainer/Bars/OverclockRow/OverclockBar
+@onready var machine_label: Label = $Panel/MarginContainer/VBoxContainer/MachineLabel
+@onready var speed_label: Label = $Panel/MarginContainer/VBoxContainer/SpeedLabel
+@onready var durability_bar: ProgressBar = $Panel/MarginContainer/VBoxContainer/Bars/DurabilityRow/DurabilityBar
+@onready var overclock_bar: ProgressBar = $Panel/MarginContainer/VBoxContainer/Bars/OverclockRow/OverclockBar
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	_durability_bar_base_modulate = durability_bar.modulate
 	timing_bar = _replace_timing_bar()
 	hide()
 
@@ -80,7 +82,7 @@ func open(machine: Machine) -> void:
 	needle_pos = 0.0
 	needle_dir = 1.0
 	_speed_adjust_timer = 0.0
-	durability_bar.modulate = Color(0.35, 1.0, 0.35, 1.0)
+	durability_bar.modulate = _durability_bar_base_modulate
 	_randomize_hit_zone()
 	_sync_bars()
 	show()
@@ -166,7 +168,7 @@ func _get_hit_zone_size() -> float:
 
 
 func _replace_timing_bar() -> Control:
-	var placeholder: Control = $Panel/VBoxContainer/TimingArea/TimingBar
+	var placeholder: Control = $Panel/MarginContainer/VBoxContainer/TimingArea/TimingBar
 	var replacement := TimingBarControl.new()
 
 	replacement.name = "TimingBar"
@@ -191,7 +193,7 @@ func _flash_durability_bar() -> void:
 
 	durability_bar.modulate = Color(1.0, 0.35, 0.35, 1.0)
 	_durability_flash_tween = create_tween()
-	_durability_flash_tween.tween_property(durability_bar, "modulate", Color(0.35, 1.0, 0.35, 1.0), 0.18)
+	_durability_flash_tween.tween_property(durability_bar, "modulate", _durability_bar_base_modulate, 0.18)
 
 
 func _draw_timing_bar(target: Control) -> void:
@@ -202,7 +204,7 @@ func _draw_timing_bar(target: Control) -> void:
 	var zone_left := (hit_zone_center - hit_zone_size * 0.5) * target.size.x
 	var zone_width := hit_zone_size * target.size.x
 	var zone_rect := Rect2(Vector2(zone_left, 0.0), Vector2(zone_width, target.size.y))
-	target.draw_rect(zone_rect, Color(0.2, 0.8, 0.3, 1.0), true)
+	target.draw_rect(zone_rect, Color(0.2, 0.94902, 0.45098, 1.0), true)
 
 	var needle_x := needle_pos * target.size.x
 	target.draw_line(Vector2(needle_x, 0.0), Vector2(needle_x, target.size.y), Color(1.0, 0.2, 0.2, 1.0), 4.0)

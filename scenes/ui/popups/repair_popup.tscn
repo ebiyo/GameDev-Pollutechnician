@@ -1,7 +1,38 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfe5wjesd2jgn"]
+[gd_scene format=3 uid="uid://dfe5wjesd2jgn"]
 
 [ext_resource type="Script" uid="uid://cdi5tljjstj0p" path="res://scenes/ui/popups/repair_popup.gd" id="1_i5ki6"]
-[ext_resource type="Theme" path="res://assets/global_ui_theme.tres" id="2_theme"]
+[ext_resource type="Theme" uid="uid://dsdc1mip7myf7" path="res://assets/global_ui_theme.tres" id="2_theme"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_repair_popup_panel"]
+bg_color = Color(0.01, 0.01, 0.01, 0.627451)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.28, 0.34, 0.4, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_repair_bar_bg"]
+bg_color = Color(0.18039216, 0.13333334, 0.18431373, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u5o23"]
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ovgbi"]
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="RepairPopup" type="CanvasLayer" unique_id=1107602296]
 script = ExtResource("1_i5ki6")
@@ -12,76 +43,95 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -210.0
-offset_top = -110.0
-offset_right = 210.0
-offset_bottom = 117.0
+offset_left = -252.0
+offset_top = -132.0
+offset_right = 252.0
+offset_bottom = 140.0
 theme = ExtResource("2_theme")
+theme_override_styles/panel = SubResource("StyleBoxFlat_repair_popup_panel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=62595777]
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=166428012]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 20
 
-[node name="MachineLabel" type="Label" parent="Panel/VBoxContainer" unique_id=1149736851]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=62595777]
 layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="MachineLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=1149736851]
+layout_mode = 2
+theme_override_font_sizes/font_size = 29
 text = "Machine A"
 horizontal_alignment = 1
 
-[node name="SpeedLabel" type="Label" parent="Panel/VBoxContainer" unique_id=7474269]
+[node name="SpeedLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=7474269]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Needle Speed: 0.35   Repair: +12.0"
 horizontal_alignment = 1
 
-[node name="TimingArea" type="Control" parent="Panel/VBoxContainer" unique_id=1033361489]
-custom_minimum_size = Vector2(380, 56)
+[node name="TimingArea" type="Control" parent="Panel/MarginContainer/VBoxContainer" unique_id=1033361489]
+custom_minimum_size = Vector2(456, 67)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="TimingBar" type="Control" parent="Panel/VBoxContainer/TimingArea" unique_id=502582052]
-custom_minimum_size = Vector2(380, 40)
+[node name="TimingBar" type="Control" parent="Panel/MarginContainer/VBoxContainer/TimingArea" unique_id=502582052]
+custom_minimum_size = Vector2(456, 48)
 anchors_preset = 0
-offset_top = 16.0
-offset_right = 380.0
-offset_bottom = 56.0
+offset_top = 19.0
+offset_right = 456.0
+offset_bottom = 67.0
 
-[node name="Bars" type="VBoxContainer" parent="Panel/VBoxContainer" unique_id=1766322952]
+[node name="Bars" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer" unique_id=1766322952]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 10
 
-[node name="DurabilityRow" type="HBoxContainer" parent="Panel/VBoxContainer/Bars" unique_id=301079976]
+[node name="DurabilityRow" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/Bars" unique_id=301079976]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 10
 
-[node name="DurabilityLabel" type="Label" parent="Panel/VBoxContainer/Bars/DurabilityRow" unique_id=1254272155]
-custom_minimum_size = Vector2(70, 0)
+[node name="DurabilityLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/Bars/DurabilityRow" unique_id=1254272155]
+custom_minimum_size = Vector2(84, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Durability"
 
-[node name="DurabilityBar" type="ProgressBar" parent="Panel/VBoxContainer/Bars/DurabilityRow" unique_id=1435733399]
-modulate = Color(0.35, 1, 0.35, 1)
+[node name="DurabilityBar" type="ProgressBar" parent="Panel/MarginContainer/VBoxContainer/Bars/DurabilityRow" unique_id=1435733399]
+modulate = Color(0.2, 0.9490196, 0.4509804, 1)
+custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_repair_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_u5o23")
 value = 100.0
 show_percentage = false
 
-[node name="OverclockRow" type="HBoxContainer" parent="Panel/VBoxContainer/Bars" unique_id=1918475401]
+[node name="OverclockRow" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/Bars" unique_id=1918475401]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 10
 
-[node name="OverclockLabel" type="Label" parent="Panel/VBoxContainer/Bars/OverclockRow" unique_id=1309405003]
-custom_minimum_size = Vector2(70, 0)
+[node name="OverclockLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/Bars/OverclockRow" unique_id=1309405003]
+custom_minimum_size = Vector2(84, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Overclock"
 
-[node name="OverclockBar" type="ProgressBar" parent="Panel/VBoxContainer/Bars/OverclockRow" unique_id=1889168284]
-modulate = Color(0.35, 0.65, 1, 1)
+[node name="OverclockBar" type="ProgressBar" parent="Panel/MarginContainer/VBoxContainer/Bars/OverclockRow" unique_id=1889168284]
+modulate = Color(0.34901962, 0.6509804, 1, 1)
+custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_repair_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ovgbi")
 show_percentage = false
 
-[node name="ControlsLabel" type="Label" parent="Panel/VBoxContainer" unique_id=464445036]
+[node name="ControlsLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=464445036]
 layout_mode = 2
+theme_override_font_sizes/font_size = 22
 text = "[E] Close   [Q] Slow down   [R] Speed up"
 horizontal_alignment = 1
