@@ -15,7 +15,7 @@ const CARD_ITEM_SCENE := preload("res://scenes/ui/components/card_item.tscn")
 @onready var event_log_entries: VBoxContainer = $EventLogPanel/EventLogEntries
 @onready var card_tooltip_label: Label = $CardTooltipLabel
 @onready var cards_root: Control = $CardsRoot
-@onready var cards_container: HBoxContainer = $CardsRoot/CardsContainer
+@onready var cards_container: VBoxContainer = $CardsRoot/CardsContainer
 @onready var cheat_speed_button: Button = $CheatSpeedButton
 
 var _displayed_card_signature: String = ""
@@ -163,22 +163,62 @@ func _rebuild_cards() -> void:
 	for child in cards_container.get_children():
 		child.queue_free()
 
+	var owned_cards: Array[Dictionary] = []
 	for card_type in GameManager.get_card_types():
-		for i in range(GameManager.get_card_count(card_type)):
-			cards_container.add_child(_create_card_item(
-				card_type,
-				GameManager.get_card_name(card_type),
-				GameManager.get_card_description(card_type)
-			))
+		var count := GameManager.get_card_count(card_type)
+		if count <= 0:
+			continue
+
+		owned_cards.append({
+			"type": card_type,
+			"name": GameManager.get_card_name(card_type),
+			"description": GameManager.get_card_description(card_type),
+			"count": count
+		})
+
+	var spacer := Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	cards_container.add_child(spacer)
+
+	var rows: Array[HBoxContainer] = []
+	var row: HBoxContainer = _create_card_row()
+	for index in range(owned_cards.size()):
+		if index > 0 and index % 2 == 0:
+			rows.append(row)
+			row = _create_card_row()
+
+		var card_data: Dictionary = owned_cards[index]
+		row.add_child(_create_card_item(
+			String(card_data.get("type", "")),
+			String(card_data.get("name", "Card")),
+			String(card_data.get("description", "")),
+			int(card_data.get("count", 1))
+		))
+
+	if row.get_child_count() > 0:
+		rows.append(row)
+
+	for row_index in range(rows.size() - 1, -1, -1):
+		cards_container.add_child(rows[row_index])
 
 
-func _create_card_item(card_type: String, card_name: String, description: String) -> PanelContainer:
+func _create_card_item(card_type: String, card_name: String, description: String, count: int) -> PanelContainer:
 	var card := CARD_ITEM_SCENE.instantiate() as CardItem
 	card.size_flags_vertical = Control.SIZE_SHRINK_END
-	card.setup(card_type, card_name, description)
+	card.setup(card_type, card_name, description, count)
 	card.use_pressed.connect(_on_card_use_pressed)
 	card.hover_changed.connect(_on_card_hover_changed)
 	return card
+
+
+func _create_card_row() -> HBoxContainer:
+	var row := HBoxContainer.new()
+	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.alignment = BoxContainer.ALIGNMENT_END
+	row.add_theme_constant_override("separation", 8)
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return row
 
 
 func _on_card_use_pressed(card_type: String) -> void:

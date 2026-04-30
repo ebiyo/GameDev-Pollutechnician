@@ -29,7 +29,7 @@ const CARD_DEFINITIONS := {
 	},
 	SUPER_REPAIR_KIT_CARD_TYPE: {
 		"name": "Super Repair Kit Card",
-		"description": "Repairs all machines to full durability and overclock."
+		"description": "Repairs all machines to full durability and full overclock."
 	},
 	FREEZE_CARD_TYPE: {
 		"name": "Freeze Card",
@@ -41,7 +41,7 @@ const DIFFICULTY_CONFIGS := {
 	Difficulty.EASY: {
 		"name": "Easy",
 		"max_cards": 5,
-		"total_days": 3,
+		"total_days": 5,
 		"day_duration": 90.0,
 		"base_reward": 50,
 		"low_pollution_bonus": 30,

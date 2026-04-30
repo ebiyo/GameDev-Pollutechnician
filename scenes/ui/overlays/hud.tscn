@@ -70,25 +70,25 @@ grow_vertical = 2
 theme_override_constants/separation = 4
 
 [node name="CardTooltipLabel" type="Label" parent="." unique_id=273761750]
-visible = false
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -377.0
-offset_top = -216.0
-offset_right = -25.0
-offset_bottom = -184.0
+offset_left = -832.0
+offset_top = -68.0
+offset_right = -300.0
+offset_bottom = 12.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("2_theme")
+theme_override_font_sizes/font_size = 20
 text = "Card effect"
 horizontal_alignment = 2
+vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="CardsRoot" type="Control" parent="." unique_id=973233142]
-visible = false
 layout_mode = 3
 anchors_preset = 3
 anchor_left = 1.0
@@ -96,20 +96,19 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -377.0
-offset_top = -190.0
+offset_top = -264.0
 offset_right = -25.0
 offset_bottom = -12.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="CardsContainer" type="HBoxContainer" parent="CardsRoot" unique_id=7412560]
+[node name="CardsContainer" type="VBoxContainer" parent="CardsRoot" unique_id=7412560]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 8
-alignment = 2
 
 [node name="TimeLabel" type="Label" parent="." unique_id=2037864965]
 anchors_preset = 1

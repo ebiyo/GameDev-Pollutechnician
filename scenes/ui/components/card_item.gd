@@ -10,6 +10,7 @@ signal hover_changed(description: String, is_visible: bool)
 var card_type: String = ""
 var card_name: String = "Card"
 var _description: String = ""
+var _count: int = 1
 var _is_hovering_card: bool = false
 
 
@@ -22,10 +23,11 @@ func _ready() -> void:
 	_update_ui()
 
 
-func setup(new_card_type: String, new_card_name: String, description: String) -> void:
+func setup(new_card_type: String, new_card_name: String, description: String, count: int = 1) -> void:
 	card_type = new_card_type
 	card_name = new_card_name
 	_description = description
+	_count = maxi(count, 1)
 	_update_ui()
 
 
@@ -33,7 +35,8 @@ func _update_ui() -> void:
 	if !is_node_ready():
 		return
 
-	name_label.text = card_name
+	name_label.text = "%s x%d" % [card_name, _count]
+	use_button.text = "Use"
 
 
 func _on_use_button_pressed() -> void:

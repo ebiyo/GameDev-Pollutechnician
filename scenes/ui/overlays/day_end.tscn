@@ -99,6 +99,8 @@ horizontal_alignment = 1
 
 [node name="SummaryLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1198754218]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.09411765, 0.078431375, 0.14509805, 1)
+theme_override_constants/outline_size = 12
 theme_override_font_sizes/font_size = 24
 text = "Base pay: $0"
 horizontal_alignment = 1
@@ -175,6 +177,9 @@ horizontal_alignment = 2
 [node name="BonusHintLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1787239506]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.09411765, 0.078431375, 0.14509805, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 20
 text = "Finish below 40% pollution to earn a bonus."
 horizontal_alignment = 1
 vertical_alignment = 1

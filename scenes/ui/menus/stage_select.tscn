@@ -139,7 +139,7 @@ horizontal_alignment = 1
 [node name="DaysLabel" type="Label" parent="Center/Content/CardsRow/EasyCard/VBoxContainer" unique_id=1375431388]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "3 days"
+text = "5 days"
 horizontal_alignment = 1
 
 [node name="SummaryLabel" type="Label" parent="Center/Content/CardsRow/EasyCard/VBoxContainer" unique_id=2011235764]

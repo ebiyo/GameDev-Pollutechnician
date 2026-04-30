@@ -155,7 +155,7 @@ theme_override_constants/separation = 8
 
 [node name="CaptionLabel" type="Label" parent="CenterContainer/VBoxContainer/StatsRow/MoneyCard/MarginContainer/VBoxContainer" unique_id=901732036]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 text = "Money Left"
 horizontal_alignment = 1
 
@@ -184,7 +184,7 @@ theme_override_constants/separation = 8
 
 [node name="CaptionLabel" type="Label" parent="CenterContainer/VBoxContainer/StatsRow/PollutionCard/MarginContainer/VBoxContainer" unique_id=804465166]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 text = "Final Pollution"
 horizontal_alignment = 1
 
@@ -213,7 +213,7 @@ theme_override_constants/separation = 8
 
 [node name="CaptionLabel" type="Label" parent="CenterContainer/VBoxContainer/StatsRow/LimitCard/MarginContainer/VBoxContainer" unique_id=1552877692]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 text = "Over Limit"
 horizontal_alignment = 1
 

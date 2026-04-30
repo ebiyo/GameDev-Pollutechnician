@@ -135,7 +135,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "All days survived. People's lungs are a bit healthier."
+text = "All days survived. People's lungs are a bit healthier than usual."
 horizontal_alignment = 1
 
 [node name="RunSummaryLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1460079576]
@@ -168,7 +168,7 @@ theme_override_constants/separation = 8
 
 [node name="CaptionLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsRow/MoneyCard/MarginContainer/VBoxContainer" unique_id=649935973]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 text = "Money Left"
 horizontal_alignment = 1
 
@@ -197,12 +197,14 @@ theme_override_constants/separation = 8
 
 [node name="CaptionLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsRow/BonusCard/MarginContainer/VBoxContainer" unique_id=1242965558]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.2, 0.9490196, 0.4509804, 1)
+theme_override_font_sizes/font_size = 24
 text = "Bonus Earned"
 horizontal_alignment = 1
 
 [node name="ValueLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsRow/BonusCard/MarginContainer/VBoxContainer" unique_id=985329427]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.9490196, 0.4509804, 1)
 theme_override_font_sizes/font_size = 34
 text = "$0"
 horizontal_alignment = 1
@@ -226,7 +228,7 @@ theme_override_constants/separation = 8
 
 [node name="CaptionLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsRow/PollutionCard/MarginContainer/VBoxContainer" unique_id=55415272]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 text = "Avg Pollution"
 horizontal_alignment = 1
 
