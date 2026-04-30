@@ -149,7 +149,7 @@ custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 20
 text = "Easy"
 autowrap_mode = 3
 
@@ -182,7 +182,7 @@ custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 20
 text = "Normal"
 autowrap_mode = 3
 
@@ -215,7 +215,7 @@ custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 20
 text = "Hard"
 autowrap_mode = 3
 

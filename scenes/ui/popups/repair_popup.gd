@@ -207,7 +207,7 @@ func _draw_timing_bar(target: Control) -> void:
 	target.draw_rect(zone_rect, Color(0.2, 0.94902, 0.45098, 1.0), true)
 
 	var needle_x := needle_pos * target.size.x
-	target.draw_line(Vector2(needle_x, 0.0), Vector2(needle_x, target.size.y), Color(1.0, 0.2, 0.2, 1.0), 4.0)
+	target.draw_line(Vector2(needle_x, 0.0), Vector2(needle_x, target.size.y), Color(1.0, 0.2, 0.2, 1.0), 5.0)
 
 
 func _format_machine_name(raw_name: String) -> String:

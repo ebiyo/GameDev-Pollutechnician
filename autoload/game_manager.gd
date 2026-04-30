@@ -17,6 +17,7 @@ const RAIN_CARD_POLLUTION_REDUCTION: float = 15.0
 const FREEZE_CARD_DURATION_MINUTES: float = 60.0
 const CAR_FREE_DAY_POLLUTION_MULTIPLIER: float = 0.75
 const DEFAULT_BASE_REPAIR_AMOUNT: float = 12.0
+const CHEAT_BUTTON_ENABLED: bool = true
 
 const CARD_DEFINITIONS := {
 	RAIN_CARD_TYPE: {
@@ -66,7 +67,7 @@ const DIFFICULTY_CONFIGS := {
 		"low_pollution_bonus": 20,
 		"low_pollution_bonus_threshold": 40.0,
 		"repair_miss_penalty": 2.4,
-		"base_pollution_rate": 3.35,
+		"base_pollution_rate": 3.4,
 		"machine_drain_multiplier": 1.12,
 		"overclock_efficiency_bonus": 0.4,
 		"machine_efficiency_multiplier": 1.0,

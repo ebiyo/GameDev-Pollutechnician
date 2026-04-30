@@ -145,7 +145,7 @@ horizontal_alignment = 1
 [node name="SummaryLabel" type="Label" parent="Center/Content/CardsRow/EasyCard/VBoxContainer" unique_id=2011235764]
 custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
-text = "Forgiving setup, more card room, and more casual."
+text = "Forgiving setup, more card slots, and more casual."
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3

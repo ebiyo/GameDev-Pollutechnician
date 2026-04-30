@@ -1,17 +1,13 @@
 [gd_scene format=3 uid="uid://bil7n80kpeq8a"]
 
 [ext_resource type="Script" uid="uid://dqd5hiw6qvb72" path="res://scenes/ui/menus/tutorial.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://2ntnxop8s74" path="res://assets/tutorial/lena-denk-vO_RghTzvxE-unsplash.jpg" id="2"]
 [ext_resource type="Texture2D" uid="uid://18sdxwhc6ihj" path="res://assets/title_bg.jpg" id="2_7agkm"]
 [ext_resource type="Theme" uid="uid://dsdc1mip7myf7" path="res://assets/global_ui_theme.tres" id="3_theme"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tutorial_frame"]
-bg_color = Color(0, 0, 0, 0)
-border_color = Color(0.2627451, 0.42352942, 0.39607844, 0.9)
-corner_radius_top_left = 14
-corner_radius_top_right = 14
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 14
+[ext_resource type="Texture2D" uid="uid://k5lycgs01ous" path="res://assets/tutorial/your_goal.png" id="4_dhkcd"]
+[ext_resource type="Texture2D" uid="uid://bj830avf7lnl8" path="res://assets/tutorial/pollution_meter.png" id="5_eh7fd"]
+[ext_resource type="Texture2D" uid="uid://m5c8ed688eie" path="res://assets/tutorial/controls.png" id="6_llypw"]
+[ext_resource type="Texture2D" uid="uid://dsceva3y2q1s7" path="res://assets/tutorial/repairing_machines.png" id="7_hcei3"]
+[ext_resource type="Texture2D" uid="uid://cu41qx1nvymx" path="res://assets/tutorial/day_system.png" id="8_u0dsx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tutorial_button_normal"]
 bg_color = Color(0.08235294, 0.14509805, 0.1764706, 0.96)
@@ -121,64 +117,49 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2")
+texture = ExtResource("4_dhkcd")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Page02" type="VBoxContainer" parent="Center/Content/PageAspect/Pages" unique_id=1051817658]
-visible = false
+[node name="Page02" type="TextureRect" parent="Center/Content/PageAspect/Pages" unique_id=466432010]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 16
-alignment = 1
+texture = ExtResource("5_eh7fd")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="TitleLabel" type="Label" parent="Center/Content/PageAspect/Pages/Page02" unique_id=1064044613]
-layout_mode = 2
-theme_override_font_sizes/font_size = 36
-text = "Page 2 Placeholder"
-horizontal_alignment = 1
-
-[node name="BodyLabel" type="Label" parent="Center/Content/PageAspect/Pages/Page02" unique_id=1250797193]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Duplicate a page node under Pages or replace this placeholder with your next image."
-horizontal_alignment = 1
-autowrap_mode = 3
-
-[node name="Page03" type="VBoxContainer" parent="Center/Content/PageAspect/Pages" unique_id=1610760732]
-visible = false
+[node name="Page03" type="TextureRect" parent="Center/Content/PageAspect/Pages" unique_id=105428416]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 16
-alignment = 1
+texture = ExtResource("6_llypw")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="TitleLabel" type="Label" parent="Center/Content/PageAspect/Pages/Page03" unique_id=745941402]
-layout_mode = 2
-theme_override_font_sizes/font_size = 36
-text = "Page 3 Placeholder"
-horizontal_alignment = 1
-
-[node name="BodyLabel" type="Label" parent="Center/Content/PageAspect/Pages/Page03" unique_id=1150419253]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Remove or duplicate pages here depending on how many tutorial screens you want."
-horizontal_alignment = 1
-autowrap_mode = 3
-
-[node name="PageFrame" type="PanelContainer" parent="Center/Content/PageAspect/Pages" unique_id=564592108]
+[node name="Page04" type="TextureRect" parent="Center/Content/PageAspect/Pages" unique_id=135101196]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_tutorial_frame")
+texture = ExtResource("7_hcei3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Page05" type="TextureRect" parent="Center/Content/PageAspect/Pages" unique_id=2041247653]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_u0dsx")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Footer" type="HBoxContainer" parent="Center/Content" unique_id=1273959593]
 layout_mode = 2

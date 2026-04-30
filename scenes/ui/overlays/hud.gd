@@ -30,6 +30,7 @@ func _ready() -> void:
 	GameManager.game_won.connect(_on_game_won)
 	pollution_bar.resized.connect(_update_threshold_marker)
 	cheat_speed_button.pressed.connect(_on_cheat_end_day_button_pressed)
+	cheat_speed_button.visible = GameManager.CHEAT_BUTTON_ENABLED
 	_on_pollution_changed(PollutionManager.pollution)
 	_update_threshold_marker()
 	_set_timer_visible(false)
@@ -84,7 +85,7 @@ func _set_timer_visible(should_show: bool) -> void:
 	day_end_hint_label.visible = should_show
 	over_threshold_label.visible = should_show
 	cards_root.visible = should_show
-	cheat_speed_button.visible = should_show
+	cheat_speed_button.visible = should_show and GameManager.CHEAT_BUTTON_ENABLED
 	card_tooltip_label.visible = false
 	if !should_show:
 		event_log_panel.visible = false
@@ -115,10 +116,18 @@ func _update_day_end_hint() -> void:
 
 
 func _update_over_threshold_label() -> void:
+	var current := PollutionManager.cumulative_minutes_over_threshold
+	var limit := PollutionManager.lose_threshold_minutes
+
 	over_threshold_label.text = "Over limit: %d / %d min" % [
-		int(PollutionManager.cumulative_minutes_over_threshold),
-		int(PollutionManager.lose_threshold_minutes)
+		int(current),
+		int(limit)
 	]
+
+	if current >= limit * 0.5:
+		over_threshold_label.add_theme_color_override("font_color", Color(1.0, 0.85, 0.45, 1.0))
+	else:
+		over_threshold_label.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0, 1.0))
 
 
 func _update_threshold_marker() -> void:
@@ -129,6 +138,9 @@ func _update_threshold_marker() -> void:
 
 
 func _on_cheat_end_day_button_pressed() -> void:
+	if !GameManager.CHEAT_BUTTON_ENABLED:
+		return
+
 	if GameManager.current_phase != GameManager.Phase.ACTIVE:
 		return
 
