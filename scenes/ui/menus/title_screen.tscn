@@ -30,23 +30,30 @@ offset_right = 1152.0
 offset_bottom = 648.0
 theme = ExtResource("2_theme")
 
-[node name="Content" type="VBoxContainer" parent="Center" unique_id=259073826]
+[node name="Content" type="HBoxContainer" parent="Center" unique_id=259073826]
 layout_mode = 2
-theme_override_constants/separation = 22
+theme_override_constants/separation = 96
 alignment = 1
 
-[node name="TitleLabel" type="Label" parent="Center/Content" unique_id=500312681]
+[node name="TitleBlock" type="VBoxContainer" parent="Center/Content" unique_id=163800001]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 18
+
+[node name="TitleLabel" type="Label" parent="Center/Content/TitleBlock" unique_id=500312681]
 layout_mode = 2
 theme_override_font_sizes/font_size = 67
 text = "Pollutechnician"
-horizontal_alignment = 1
+horizontal_alignment = 0
 
-[node name="SubtitleLabel" type="Label" parent="Center/Content" unique_id=2061083565]
-custom_minimum_size = Vector2(720, 0)
+[node name="SubtitleLabel" type="Label" parent="Center/Content/TitleBlock" unique_id=2061083565]
+custom_minimum_size = Vector2(520, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Keep the city breathing, one machine at a time."
-horizontal_alignment = 1
+horizontal_alignment = 0
+autowrap_mode = 3
 
 [node name="Buttons" type="VBoxContainer" parent="Center/Content" unique_id=1312001135]
 layout_mode = 2
