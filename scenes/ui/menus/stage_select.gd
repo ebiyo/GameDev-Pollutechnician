@@ -31,10 +31,10 @@ func _on_hard_button_pressed() -> void:
 
 func _on_back_button_pressed() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file(TITLE_SCENE_PATH)
+	SceneTransition.change_scene_to_file(TITLE_SCENE_PATH)
 
 
 func _start_run(difficulty: int) -> void:
 	get_tree().paused = false
 	GameManager.start_new_run(difficulty)
-	get_tree().change_scene_to_file(WORLD_SCENE_PATH)
+	SceneTransition.change_scene_to_file(WORLD_SCENE_PATH)

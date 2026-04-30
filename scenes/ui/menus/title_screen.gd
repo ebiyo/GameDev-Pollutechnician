@@ -18,14 +18,14 @@ func _ready() -> void:
 
 func _on_play_button_pressed() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file(STAGE_SELECT_SCENE_PATH)
+	SceneTransition.change_scene_to_file(STAGE_SELECT_SCENE_PATH)
 
 
 func _on_tutorial_button_pressed() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file(TUTORIAL_SCENE_PATH)
+	SceneTransition.change_scene_to_file(TUTORIAL_SCENE_PATH)
 
 
 func _on_latest_run_button_pressed() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file(LATEST_RUN_SCENE_PATH)
+	SceneTransition.change_scene_to_file(LATEST_RUN_SCENE_PATH)

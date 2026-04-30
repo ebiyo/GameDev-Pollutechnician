@@ -18,7 +18,7 @@ func _ready() -> void:
 
 func _on_restart_button_pressed() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file(TITLE_SCENE_PATH)
+	SceneTransition.change_scene_to_file(TITLE_SCENE_PATH)
 
 
 func _refresh_ui() -> void:

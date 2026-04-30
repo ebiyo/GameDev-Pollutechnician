@@ -42,4 +42,4 @@ func _on_resume_button_pressed() -> void:
 func _on_back_to_title_button_pressed() -> void:
 	get_tree().paused = false
 	back_to_title_requested.emit()
-	get_tree().change_scene_to_file(TITLE_SCENE_PATH)
+	SceneTransition.change_scene_to_file(TITLE_SCENE_PATH)

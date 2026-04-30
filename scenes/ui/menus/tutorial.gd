@@ -32,7 +32,7 @@ func _show_next_page() -> void:
 
 func _go_back() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file(TITLE_SCENE_PATH)
+	SceneTransition.change_scene_to_file(TITLE_SCENE_PATH)
 
 
 func _refresh_page() -> void:
