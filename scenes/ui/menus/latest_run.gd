@@ -61,7 +61,7 @@ func _format_purchase_group(data: Variant) -> String:
 	names.sort()
 
 	var parts: PackedStringArray = []
-	for name in names:
-		parts.append("%s x%d" % [name, int(purchase_data.get(name, 0))])
+	for purchase_name in names:
+		parts.append("%s x%d" % [purchase_name, int(purchase_data.get(purchase_name, 0))])
 
 	return ", ".join(parts)
