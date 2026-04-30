@@ -287,6 +287,7 @@ text = "Buy"
 [node name="StartDayButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1751238137]
 custom_minimum_size = Vector2(220, 56)
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = SubResource("StyleBoxFlat_offer_button_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_offer_button_pressed")

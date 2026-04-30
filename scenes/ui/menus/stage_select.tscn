@@ -4,6 +4,58 @@
 [ext_resource type="Theme" uid="uid://dsdc1mip7myf7" path="res://assets/global_ui_theme.tres" id="2_theme"]
 [ext_resource type="Texture2D" uid="uid://18sdxwhc6ihj" path="res://assets/title_bg.jpg" id="3_bg"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stage_card"]
+content_margin_left = 18.0
+content_margin_top = 16.0
+content_margin_right = 18.0
+content_margin_bottom = 16.0
+bg_color = Color(0.08235294, 0.12941177, 0.16470589, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.254902, 0.435294, 0.4, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stage_button_normal"]
+bg_color = Color(0.08235294, 0.14509805, 0.1764706, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.254902, 0.435294, 0.4, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stage_button_pressed"]
+bg_color = Color(0.05882353, 0.10588235, 0.12941177, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.22352941, 0.37254903, 0.34509805, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stage_button_hover"]
+bg_color = Color(0.11372549, 0.19607843, 0.23529412, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.33333334, 0.54509807, 0.4862745, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [node name="StageSelect" type="CanvasLayer" unique_id=2069855226]
 script = ExtResource("1")
 
@@ -13,10 +65,28 @@ scale = Vector2(4, 4)
 texture = ExtResource("3_bg")
 
 [node name="Backdrop" type="ColorRect" parent="." unique_id=1061645828]
-visible = false
 offset_right = 1152.0
 offset_bottom = 648.0
-color = Color(0.0470588, 0.0784314, 0.0862745, 1)
+mouse_filter = 2
+color = Color(0.03529412, 0.0627451, 0.07450981, 0.36)
+
+[node name="GlowLeft" type="ColorRect" parent="." unique_id=1942513681]
+visible = false
+offset_left = -64.0
+offset_top = 84.0
+offset_right = 344.0
+offset_bottom = 586.0
+mouse_filter = 2
+color = Color(0.14902, 0.392157, 0.333333, 0.14)
+
+[node name="GlowRight" type="ColorRect" parent="." unique_id=1531175457]
+visible = false
+offset_left = 792.0
+offset_top = 106.0
+offset_right = 1210.0
+offset_bottom = 620.0
+mouse_filter = 2
+color = Color(0.380392, 0.619608, 0.388235, 0.12)
 
 [node name="Center" type="CenterContainer" parent="." unique_id=1724485218]
 offset_right = 1152.0
@@ -25,7 +95,7 @@ theme = ExtResource("2_theme")
 
 [node name="Content" type="VBoxContainer" parent="Center" unique_id=1419603321]
 layout_mode = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 20
 alignment = 1
 
 [node name="TitleLabel" type="Label" parent="Center/Content" unique_id=231895418]
@@ -42,7 +112,7 @@ layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.09411765, 0.078431375, 0.14509805, 1)
 theme_override_constants/outline_size = 12
 theme_override_font_sizes/font_size = 24
-text = "Choose a run you want to tackle."
+text = "Choose a run you want to try."
 horizontal_alignment = 1
 
 [node name="CardsRow" type="HBoxContainer" parent="Center/Content" unique_id=1767429413]
@@ -53,11 +123,12 @@ alignment = 1
 [node name="EasyCard" type="PanelContainer" parent="Center/Content/CardsRow" unique_id=1553856887]
 custom_minimum_size = Vector2(260, 320)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_stage_card")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Center/Content/CardsRow/EasyCard" unique_id=692014203]
 custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 14
 
 [node name="ModeLabel" type="Label" parent="Center/Content/CardsRow/EasyCard/VBoxContainer" unique_id=1741915802]
 layout_mode = 2
@@ -67,6 +138,7 @@ horizontal_alignment = 1
 
 [node name="DaysLabel" type="Label" parent="Center/Content/CardsRow/EasyCard/VBoxContainer" unique_id=1375431388]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "3 days"
 horizontal_alignment = 1
 
@@ -87,16 +159,21 @@ size_flags_vertical = 3
 custom_minimum_size = Vector2(180, 56)
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_stage_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_stage_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_stage_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_stage_button_hover")
 text = "Start Easy"
 
 [node name="NormalCard" type="PanelContainer" parent="Center/Content/CardsRow" unique_id=1873200953]
 custom_minimum_size = Vector2(260, 320)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_stage_card")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Center/Content/CardsRow/NormalCard" unique_id=1655107478]
 custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 14
 
 [node name="ModeLabel" type="Label" parent="Center/Content/CardsRow/NormalCard/VBoxContainer" unique_id=2006621766]
 layout_mode = 2
@@ -106,6 +183,7 @@ horizontal_alignment = 1
 
 [node name="DaysLabel" type="Label" parent="Center/Content/CardsRow/NormalCard/VBoxContainer" unique_id=431952368]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "7 days"
 horizontal_alignment = 1
 
@@ -126,16 +204,21 @@ size_flags_vertical = 3
 custom_minimum_size = Vector2(180, 56)
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_stage_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_stage_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_stage_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_stage_button_hover")
 text = "Start Normal"
 
 [node name="HardCard" type="PanelContainer" parent="Center/Content/CardsRow" unique_id=697361920]
 custom_minimum_size = Vector2(260, 320)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_stage_card")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Center/Content/CardsRow/HardCard" unique_id=1860534951]
 custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 14
 
 [node name="ModeLabel" type="Label" parent="Center/Content/CardsRow/HardCard/VBoxContainer" unique_id=1598887592]
 layout_mode = 2
@@ -145,6 +228,7 @@ horizontal_alignment = 1
 
 [node name="DaysLabel" type="Label" parent="Center/Content/CardsRow/HardCard/VBoxContainer" unique_id=1312490197]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "7 days"
 horizontal_alignment = 1
 
@@ -165,10 +249,19 @@ size_flags_vertical = 3
 custom_minimum_size = Vector2(180, 56)
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_stage_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_stage_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_stage_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_stage_button_hover")
 text = "Start Hard"
 
 [node name="BackButton" type="Button" parent="Center/Content" unique_id=1579695105]
 custom_minimum_size = Vector2(160, 52)
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_stage_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_stage_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_stage_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_stage_button_hover")
 text = "Back"

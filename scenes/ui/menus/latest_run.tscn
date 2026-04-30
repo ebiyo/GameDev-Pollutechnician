@@ -4,6 +4,58 @@
 [ext_resource type="Theme" uid="uid://dsdc1mip7myf7" path="res://assets/global_ui_theme.tres" id="2_theme"]
 [ext_resource type="Texture2D" uid="uid://18sdxwhc6ihj" path="res://assets/title_bg.jpg" id="2_xweox"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_record_card"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.08235294, 0.12941177, 0.16470589, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.254902, 0.435294, 0.4, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_record_button_normal"]
+bg_color = Color(0.08235294, 0.14509805, 0.1764706, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.254902, 0.435294, 0.4, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_record_button_pressed"]
+bg_color = Color(0.05882353, 0.10588235, 0.12941177, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.22352941, 0.37254903, 0.34509805, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_record_button_hover"]
+bg_color = Color(0.11372549, 0.19607843, 0.23529412, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.33333334, 0.54509807, 0.4862745, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [node name="LatestRun" type="CanvasLayer" unique_id=1912627132]
 script = ExtResource("1")
 
@@ -13,10 +65,10 @@ scale = Vector2(4, 4)
 texture = ExtResource("2_xweox")
 
 [node name="Backdrop" type="ColorRect" parent="." unique_id=1450849384]
-visible = false
 offset_right = 1152.0
 offset_bottom = 648.0
-color = Color(0.0470588, 0.0784314, 0.0862745, 1)
+mouse_filter = 2
+color = Color(0.03529412, 0.0627451, 0.07450981, 0.36)
 
 [node name="GlowLeft" type="ColorRect" parent="." unique_id=1499361247]
 visible = false
@@ -24,7 +76,8 @@ offset_left = -80.0
 offset_top = 64.0
 offset_right = 380.0
 offset_bottom = 584.0
-color = Color(0.14902, 0.392157, 0.333333, 0.2)
+mouse_filter = 2
+color = Color(0.14902, 0.392157, 0.333333, 0.14)
 
 [node name="GlowRight" type="ColorRect" parent="." unique_id=799653446]
 visible = false
@@ -32,7 +85,8 @@ offset_left = 772.0
 offset_top = 120.0
 offset_right = 1228.0
 offset_bottom = 660.0
-color = Color(0.380392, 0.619608, 0.388235, 0.16)
+mouse_filter = 2
+color = Color(0.380392, 0.619608, 0.388235, 0.12)
 
 [node name="Center" type="CenterContainer" parent="." unique_id=1468595417]
 offset_right = 1152.0
@@ -41,7 +95,7 @@ theme = ExtResource("2_theme")
 
 [node name="Content" type="VBoxContainer" parent="Center" unique_id=1654789476]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 18
 alignment = 1
 
 [node name="TitleLabel" type="Label" parent="Center/Content" unique_id=571390655]
@@ -69,10 +123,12 @@ alignment = 1
 [node name="EasyCard" type="PanelContainer" parent="Center/Content/CardsRow" unique_id=371553662]
 custom_minimum_size = Vector2(310, 390)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_record_card")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Center/Content/CardsRow/EasyCard" unique_id=1840678644]
 custom_minimum_size = Vector2(0, 390)
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="ModeLabel" type="Label" parent="Center/Content/CardsRow/EasyCard/VBoxContainer" unique_id=1493402702]
 layout_mode = 2
@@ -93,17 +149,19 @@ custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 24
 text = "Easy"
 autowrap_mode = 3
 
 [node name="NormalCard" type="PanelContainer" parent="Center/Content/CardsRow" unique_id=2077806001]
 custom_minimum_size = Vector2(310, 390)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_record_card")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Center/Content/CardsRow/NormalCard" unique_id=188869437]
 custom_minimum_size = Vector2(0, 390)
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="ModeLabel" type="Label" parent="Center/Content/CardsRow/NormalCard/VBoxContainer" unique_id=345072953]
 layout_mode = 2
@@ -124,17 +182,19 @@ custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 24
 text = "Normal"
 autowrap_mode = 3
 
 [node name="HardCard" type="PanelContainer" parent="Center/Content/CardsRow" unique_id=76712800]
 custom_minimum_size = Vector2(310, 390)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_record_card")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Center/Content/CardsRow/HardCard" unique_id=1458199973]
 custom_minimum_size = Vector2(0, 390)
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="ModeLabel" type="Label" parent="Center/Content/CardsRow/HardCard/VBoxContainer" unique_id=1148084582]
 layout_mode = 2
@@ -155,12 +215,17 @@ custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 24
 text = "Hard"
 autowrap_mode = 3
 
 [node name="BackButton" type="Button" parent="Center/Content" unique_id=218970465]
 custom_minimum_size = Vector2(160, 52)
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_record_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_record_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_record_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_record_button_hover")
 text = "Back"

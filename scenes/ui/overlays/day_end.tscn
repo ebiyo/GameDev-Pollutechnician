@@ -170,6 +170,7 @@ autowrap_mode = 3
 [node name="NextDayButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=278932489]
 custom_minimum_size = Vector2(220, 56)
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxFlat_day_end_button_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_day_end_button_pressed")

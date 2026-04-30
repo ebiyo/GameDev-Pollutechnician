@@ -1,16 +1,85 @@
-[gd_scene load_steps=4 format=3 uid="uid://bil7n80kpeq8a"]
+[gd_scene format=3 uid="uid://bil7n80kpeq8a"]
 
 [ext_resource type="Script" uid="uid://dqd5hiw6qvb72" path="res://scenes/ui/menus/tutorial.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://2ntnxop8s74" path="res://assets/tutorial/lena-denk-vO_RghTzvxE-unsplash.jpg" id="2"]
-[ext_resource type="Theme" path="res://assets/global_ui_theme.tres" id="3_theme"]
+[ext_resource type="Texture2D" uid="uid://18sdxwhc6ihj" path="res://assets/title_bg.jpg" id="2_7agkm"]
+[ext_resource type="Theme" uid="uid://dsdc1mip7myf7" path="res://assets/global_ui_theme.tres" id="3_theme"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tutorial_frame"]
+bg_color = Color(0, 0, 0, 0)
+border_color = Color(0.2627451, 0.42352942, 0.39607844, 0.9)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tutorial_button_normal"]
+bg_color = Color(0.08235294, 0.14509805, 0.1764706, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.254902, 0.435294, 0.4, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tutorial_button_pressed"]
+bg_color = Color(0.05882353, 0.10588235, 0.12941177, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.22352941, 0.37254903, 0.34509805, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tutorial_button_hover"]
+bg_color = Color(0.11372549, 0.19607843, 0.23529412, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.33333334, 0.54509807, 0.4862745, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Tutorial" type="CanvasLayer" unique_id=989069001]
 script = ExtResource("1")
 
-[node name="Backdrop" type="ColorRect" parent="." unique_id=1574714987]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=219450492]
+position = Vector2(576, 324)
+scale = Vector2(4, 4)
+texture = ExtResource("2_7agkm")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=218823972]
 offset_right = 1152.0
 offset_bottom = 648.0
-color = Color(0.0470588, 0.0784314, 0.0862745, 1)
+mouse_filter = 2
+color = Color(0.03529412, 0.0627451, 0.07450981, 0.36)
+
+[node name="GlowLeft" type="ColorRect" parent="." unique_id=2060570362]
+visible = false
+offset_left = -36.0
+offset_top = 82.0
+offset_right = 318.0
+offset_bottom = 594.0
+mouse_filter = 2
+color = Color(0.14902, 0.392157, 0.333333, 0.12)
+
+[node name="GlowRight" type="ColorRect" parent="." unique_id=462458606]
+visible = false
+offset_left = 842.0
+offset_top = 78.0
+offset_right = 1174.0
+offset_bottom = 580.0
+mouse_filter = 2
+color = Color(0.380392, 0.619608, 0.388235, 0.1)
 
 [node name="Center" type="CenterContainer" parent="." unique_id=1607315255]
 offset_right = 1152.0
@@ -19,15 +88,18 @@ theme = ExtResource("3_theme")
 
 [node name="Content" type="VBoxContainer" parent="Center" unique_id=275584994]
 layout_mode = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 16
 
 [node name="Header" type="HBoxContainer" parent="Center/Content" unique_id=639051208]
 layout_mode = 2
+theme_override_constants/separation = 12
 
 [node name="TitleLabel" type="Label" parent="Center/Content/Header" unique_id=1208148408]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 34
+theme_override_colors/font_outline_color = Color(0.09411765, 0.078431375, 0.14509805, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 44
 text = "Tutorial"
 horizontal_alignment = 1
 
@@ -99,34 +171,58 @@ text = "Remove or duplicate pages here depending on how many tutorial screens yo
 horizontal_alignment = 1
 autowrap_mode = 3
 
+[node name="PageFrame" type="PanelContainer" parent="Center/Content/PageAspect/Pages" unique_id=564592108]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tutorial_frame")
+
 [node name="Footer" type="HBoxContainer" parent="Center/Content" unique_id=1273959593]
 layout_mode = 2
+theme_override_constants/separation = 16
 alignment = 1
 
 [node name="PageLabel" type="Label" parent="Center/Content/Footer" unique_id=1580237246]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.09411765, 0.078431375, 0.14509805, 1)
+theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 24
 text = "Page 1 / 3"
 
 [node name="NavButtons" type="HBoxContainer" parent="Center/Content/Footer" unique_id=1363506327]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 14
 
 [node name="PrevButton" type="Button" parent="Center/Content/Footer/NavButtons" unique_id=1436891574]
 custom_minimum_size = Vector2(56, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 31
+theme_override_styles/normal = SubResource("StyleBoxFlat_tutorial_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tutorial_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tutorial_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_tutorial_button_hover")
 text = "<"
 
 [node name="NextButton" type="Button" parent="Center/Content/Footer/NavButtons" unique_id=857555274]
 custom_minimum_size = Vector2(56, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 31
+theme_override_styles/normal = SubResource("StyleBoxFlat_tutorial_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tutorial_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tutorial_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_tutorial_button_hover")
 text = ">"
 
 [node name="BackButton" type="Button" parent="Center/Content/Footer" unique_id=1005423360]
 custom_minimum_size = Vector2(140, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_tutorial_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tutorial_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tutorial_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_tutorial_button_hover")
 text = "Back"
