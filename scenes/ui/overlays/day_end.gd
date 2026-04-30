@@ -34,9 +34,9 @@ func _on_day_ended(money_earned: int) -> void:
 	bonus_value.text = "+$%d" % bonus_reward
 	pollution_value.text = "%.1f" % ended_pollution
 	if qualified_for_bonus:
-		bonus_hint_label.text = "Low pollution bonus earned for finishing below %.0f pollution." % bonus_threshold
+		bonus_hint_label.text = "Low pollution bonus earned for finishing below %.0f%% pollution!" % bonus_threshold
 	else:
-		bonus_hint_label.text = "No low pollution bonus. Finish below %.0f% pollution to earn a bonus." % bonus_threshold
+		bonus_hint_label.text = "No low pollution bonus. Finish below %.0f%% pollution to earn a bonus." % bonus_threshold
 	show()
 
 

@@ -57,14 +57,20 @@ corner_radius_bottom_left = 10
 script = ExtResource("1")
 
 [node name="Backdrop" type="ColorRect" parent="." unique_id=731000141]
-offset_right = 1152.0
-offset_bottom = 648.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.34)
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=108349219]
-offset_right = 1152.0
-offset_bottom = 648.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("2_theme")
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1879207370]
@@ -85,6 +91,8 @@ theme_override_constants/separation = 14
 
 [node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1302016165]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.09411765, 0.078431375, 0.14509805, 1)
+theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 42
 text = "Day X Complete"
 horizontal_alignment = 1
@@ -118,6 +126,7 @@ theme_override_constants/separation = 16
 [node name="CaptionLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsCard/MarginContainer/VBoxContainer/EarnedRow" unique_id=1635124384]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Total Earned"
 
 [node name="ValueLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsCard/MarginContainer/VBoxContainer/EarnedRow" unique_id=1668179672]
@@ -134,11 +143,14 @@ theme_override_constants/separation = 16
 [node name="CaptionLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsCard/MarginContainer/VBoxContainer/BonusRow" unique_id=988619508]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.9490196, 0.4509804, 1)
+theme_override_font_sizes/font_size = 24
 text = "Bonus"
 
 [node name="ValueLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsCard/MarginContainer/VBoxContainer/BonusRow" unique_id=610706222]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.2, 0.9490196, 0.4509804, 1)
 theme_override_font_sizes/font_size = 28
 text = "+$0"
 horizontal_alignment = 2
@@ -150,6 +162,7 @@ theme_override_constants/separation = 16
 [node name="CaptionLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsCard/MarginContainer/VBoxContainer/PollutionRow" unique_id=50384314]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Pollution"
 
 [node name="ValueLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsCard/MarginContainer/VBoxContainer/PollutionRow" unique_id=1485414878]
