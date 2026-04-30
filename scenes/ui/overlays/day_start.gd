@@ -14,14 +14,11 @@ const SPEED_BOOST_AMOUNT: float = 0.15
 const REPAIR_EFFICIENCY_GAIN: float = 4.0
 const FLASH_SPEED_MULTIPLIER: float = 2.0
 
-@onready var title_label: Label = $VBoxContainer/TitleLabel
-@onready var money_label: Label = $VBoxContainer/MoneyLabel
-@onready var offer_button_1: Button = $VBoxContainer/OfferButton1
-@onready var offer_button_2: Button = $VBoxContainer/OfferButton2
-@onready var offer_button_3: Button = $VBoxContainer/OfferButton3
-@onready var start_day_button: Button = $VBoxContainer/StartDayButton
+@onready var title_label: Label = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/TitleLabel
+@onready var money_label: Label = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MoneyLabel
+@onready var start_day_button: Button = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StartDayButton
 
-var _offer_buttons: Array[Button] = []
+var _offer_cards: Array[Dictionary] = []
 var _current_offers: Array[Dictionary] = []
 var _purchased_offer_ids: Dictionary = {}
 
@@ -29,10 +26,15 @@ var _purchased_offer_ids: Dictionary = {}
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	GameManager.day_ended.connect(_on_day_ended)
-	_offer_buttons = [offer_button_1, offer_button_2, offer_button_3]
+	_offer_cards = [
+		_make_offer_card_refs($CenterContainer/PanelContainer/MarginContainer/VBoxContainer/OffersRow/OfferCard1),
+		_make_offer_card_refs($CenterContainer/PanelContainer/MarginContainer/VBoxContainer/OffersRow/OfferCard2),
+		_make_offer_card_refs($CenterContainer/PanelContainer/MarginContainer/VBoxContainer/OffersRow/OfferCard3)
+	]
 
-	for index in range(_offer_buttons.size()):
-		_offer_buttons[index].pressed.connect(_on_offer_button_pressed.bind(index))
+	for index in range(_offer_cards.size()):
+		var buy_button := _offer_cards[index]["buy_button"] as Button
+		buy_button.pressed.connect(_on_offer_button_pressed.bind(index))
 
 	start_day_button.pressed.connect(_on_start_day_button_pressed)
 	hide()
@@ -42,8 +44,8 @@ func _on_day_ended(_money_earned: int) -> void:
 	GameManager.current_phase = GameManager.Phase.PREP
 	_roll_daily_offers()
 	_update_labels()
-	_refresh_offer_buttons()
-	show()
+	_refresh_offer_cards()
+	hide()
 
 
 func _on_offer_button_pressed(index: int) -> void:
@@ -59,7 +61,7 @@ func _on_offer_button_pressed(index: int) -> void:
 
 	_purchased_offer_ids[String(offer.get("id", ""))] = true
 	_update_labels()
-	_refresh_offer_buttons()
+	_refresh_offer_cards()
 
 
 func _on_start_day_button_pressed() -> void:
@@ -246,23 +248,55 @@ func _update_labels() -> void:
 	]
 
 
-func _refresh_offer_buttons() -> void:
-	for index in range(_offer_buttons.size()):
-		var button := _offer_buttons[index]
+func _refresh_offer_cards() -> void:
+	for index in range(_offer_cards.size()):
+		var card := _offer_cards[index]
+		var panel := card["panel"] as PanelContainer
+		var group_label := card["group_label"] as Label
+		var name_label := card["name_label"] as Label
+		var description_label := card["description_label"] as Label
+		var cost_label := card["cost_label"] as Label
+		var buy_button := card["buy_button"] as Button
+
 		if index >= _current_offers.size():
-			button.visible = false
+			panel.visible = false
 			continue
 
 		var offer: Dictionary = _current_offers[index]
-		button.visible = true
-		button.text = _format_offer_text(offer)
-		button.disabled = !_can_buy_offer(offer)
+		panel.visible = true
+		group_label.text = String(offer.get("group", "Offer"))
+		name_label.text = String(offer.get("name", "Unknown"))
+		description_label.text = String(offer.get("description", ""))
+		cost_label.text = "Cost: $%d" % int(offer.get("cost", 0))
+		buy_button.disabled = !_can_buy_offer(offer)
+		buy_button.text = _get_offer_button_text(offer)
 
 
-func _format_offer_text(offer: Dictionary) -> String:
-	return "[%s] %s - $%d: %s" % [
-		String(offer.get("group", "")),
-		String(offer.get("name", "")),
-		int(offer.get("cost", 0)),
-		String(offer.get("description", ""))
-	]
+func _get_offer_button_text(offer: Dictionary) -> String:
+	var offer_id: String = String(offer.get("id", ""))
+	var cost: int = int(offer.get("cost", 0))
+
+	if bool(_purchased_offer_ids.get(offer_id, false)):
+		return "Purchased"
+
+	if GameManager.money < cost:
+		return "Need $%d" % cost
+
+	if String(offer.get("group", "")) == "Card" and GameManager.get_total_cards() >= GameManager.max_cards:
+		return "Card slots full"
+
+	if offer_id == "flash" and GameManager.has_flash_upgrade:
+		return "Already owned"
+
+	return "Buy"
+
+
+func _make_offer_card_refs(panel: PanelContainer) -> Dictionary:
+	return {
+		"panel": panel,
+		"group_label": panel.get_node("MarginContainer/VBoxContainer/GroupLabel") as Label,
+		"name_label": panel.get_node("MarginContainer/VBoxContainer/NameLabel") as Label,
+		"description_label": panel.get_node("MarginContainer/VBoxContainer/DescriptionLabel") as Label,
+		"cost_label": panel.get_node("MarginContainer/VBoxContainer/CostLabel") as Label,
+		"buy_button": panel.get_node("MarginContainer/VBoxContainer/BuyButton") as Button
+	}

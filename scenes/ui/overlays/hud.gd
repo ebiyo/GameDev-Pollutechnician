@@ -68,7 +68,10 @@ func _on_day_started() -> void:
 
 
 func _on_day_ended(_money_earned: int) -> void:
-	_set_timer_visible(false)
+	_update_day_label()
+	_update_time_label()
+	_update_day_end_hint()
+	_update_card_panel()
 
 
 func _on_game_won() -> void:

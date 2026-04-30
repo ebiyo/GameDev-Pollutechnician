@@ -3,44 +3,67 @@
 [ext_resource type="Script" uid="uid://b5ui0c7mr7213" path="res://scenes/ui/menus/game_over.gd" id="1"]
 [ext_resource type="Theme" uid="uid://dsdc1mip7myf7" path="res://assets/global_ui_theme.tres" id="2_theme"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_restart_normal"]
-bg_color = Color(0.82, 0.86, 0.9, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
+bg_color = Color(0.34509805, 0.16470589, 0.19607843, 0.95)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.2, 0.24, 0.28, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+border_color = Color(0.84313726, 0.44313726, 0.47058824, 1)
+corner_radius_top_left = 999
+corner_radius_top_right = 999
+corner_radius_bottom_right = 999
+corner_radius_bottom_left = 999
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_restart_pressed"]
-bg_color = Color(0.5896, 0.62846, 0.67, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_loss_card"]
+bg_color = Color(0.12941177, 0.09803922, 0.11372549, 0.98)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.2, 0.24, 0.28, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+border_color = Color(0.5568628, 0.34117648, 0.37254903, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_restart_hover"]
-bg_color = Color(0.9, 0.93, 0.96, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_normal"]
+bg_color = Color(0.13725491, 0.09019608, 0.10588235, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.2, 0.24, 0.28, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+border_color = Color(0.5568628, 0.34117648, 0.37254903, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_pressed"]
+bg_color = Color(0.09803922, 0.06666667, 0.078431375, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4392157, 0.26666668, 0.29411766, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
+bg_color = Color(0.18431373, 0.11764706, 0.14117648, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7490196, 0.45490196, 0.4862745, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="GameOver" type="CanvasLayer" unique_id=657574457]
-visible = false
 script = ExtResource("1")
 
 [node name="Backdrop" type="ColorRect" parent="." unique_id=1935330787]
@@ -49,38 +72,173 @@ offset_bottom = 648.0
 mouse_filter = 2
 color = Color(0, 0, 0, 0.72)
 
-[node name="GameOverLabel" type="Label" parent="." unique_id=1620515050]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -120.0
-offset_top = -60.0
-offset_right = 120.0
-offset_bottom = -20.0
+[node name="GlowLeft" type="ColorRect" parent="." unique_id=1463441138]
+offset_left = 88.0
+offset_top = 126.0
+offset_right = 412.0
+offset_bottom = 544.0
+mouse_filter = 2
+color = Color(0.5176471, 0.16470589, 0.23137255, 0.16)
+
+[node name="GlowRight" type="ColorRect" parent="." unique_id=430120130]
+offset_left = 744.0
+offset_top = 96.0
+offset_right = 1078.0
+offset_bottom = 562.0
+mouse_filter = 2
+color = Color(0.43137255, 0.14117648, 0.1882353, 0.14)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1581798479]
+offset_right = 1152.0
+offset_bottom = 648.0
 theme = ExtResource("2_theme")
-theme_override_font_sizes/font_size = 48
-text = "Game Over"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=897213768]
+custom_minimum_size = Vector2(760, 0)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Badge" type="PanelContainer" parent="CenterContainer/VBoxContainer" unique_id=816386093]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_badge")
+
+[node name="BadgeLabel" type="Label" parent="CenterContainer/VBoxContainer/Badge" unique_id=1661335661]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Run Lost"
 horizontal_alignment = 1
 
-[node name="RestartButton" type="Button" parent="." unique_id=1130031995]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -70.0
-offset_top = 8.0
-offset_right = 70.0
-offset_bottom = 39.0
-theme = ExtResource("2_theme")
-theme_override_colors/font_color = Color(0.12, 0.14, 0.16, 1)
-theme_override_colors/font_hover_color = Color(0.12, 0.14, 0.16, 1)
-theme_override_colors/font_pressed_color = Color(0.12, 0.14, 0.16, 1)
-theme_override_colors/font_focus_color = Color(0.12, 0.14, 0.16, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_restart_normal")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_restart_pressed")
-theme_override_styles/hover = SubResource("StyleBoxFlat_restart_hover")
-theme_override_styles/focus = SubResource("StyleBoxFlat_restart_hover")
+[node name="GameOverLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1620515050]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.10196079, 0.0627451, 0.078431375, 1)
+theme_override_constants/outline_size = 18
+theme_override_font_sizes/font_size = 62
+text = "City Overloaded"
+horizontal_alignment = 1
+
+[node name="SubtitleLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1215946320]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Pollution spiraled out of control. People's lungs are a bit more unhealthy."
+horizontal_alignment = 1
+
+[node name="RunSummaryLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=799479834]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Easy - 1 / 3 days survived"
+horizontal_alignment = 1
+
+[node name="StatsRow" type="HBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=729734234]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="MoneyCard" type="PanelContainer" parent="CenterContainer/VBoxContainer/StatsRow" unique_id=1145737257]
+custom_minimum_size = Vector2(220, 132)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_loss_card")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/VBoxContainer/StatsRow/MoneyCard" unique_id=428859766]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/StatsRow/MoneyCard/MarginContainer" unique_id=560104494]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CaptionLabel" type="Label" parent="CenterContainer/VBoxContainer/StatsRow/MoneyCard/MarginContainer/VBoxContainer" unique_id=901732036]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Money Left"
+horizontal_alignment = 1
+
+[node name="ValueLabel" type="Label" parent="CenterContainer/VBoxContainer/StatsRow/MoneyCard/MarginContainer/VBoxContainer" unique_id=1254681515]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "$0"
+horizontal_alignment = 1
+
+[node name="PollutionCard" type="PanelContainer" parent="CenterContainer/VBoxContainer/StatsRow" unique_id=1024097103]
+custom_minimum_size = Vector2(220, 132)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_loss_card")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/VBoxContainer/StatsRow/PollutionCard" unique_id=210361777]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/StatsRow/PollutionCard/MarginContainer" unique_id=1028004045]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CaptionLabel" type="Label" parent="CenterContainer/VBoxContainer/StatsRow/PollutionCard/MarginContainer/VBoxContainer" unique_id=804465166]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Final Pollution"
+horizontal_alignment = 1
+
+[node name="ValueLabel" type="Label" parent="CenterContainer/VBoxContainer/StatsRow/PollutionCard/MarginContainer/VBoxContainer" unique_id=1514704735]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "0.0%"
+horizontal_alignment = 1
+
+[node name="LimitCard" type="PanelContainer" parent="CenterContainer/VBoxContainer/StatsRow" unique_id=214087097]
+custom_minimum_size = Vector2(220, 132)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_loss_card")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/VBoxContainer/StatsRow/LimitCard" unique_id=1777742638]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/StatsRow/LimitCard/MarginContainer" unique_id=1274097571]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CaptionLabel" type="Label" parent="CenterContainer/VBoxContainer/StatsRow/LimitCard/MarginContainer/VBoxContainer" unique_id=1552877692]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Over Limit"
+horizontal_alignment = 1
+
+[node name="ValueLabel" type="Label" parent="CenterContainer/VBoxContainer/StatsRow/LimitCard/MarginContainer/VBoxContainer" unique_id=773283372]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "0 / 0"
+horizontal_alignment = 1
+
+[node name="FooterLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1322253396]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "The city can still recover, but this run is over."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="RestartButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1130031995]
+custom_minimum_size = Vector2(220, 56)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_button_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_button_hover")
 text = "Back to Title"

@@ -29,11 +29,11 @@ const CARD_DEFINITIONS := {
 	},
 	SUPER_REPAIR_KIT_CARD_TYPE: {
 		"name": "Super Repair Kit Card",
-		"description": "Repairs all machines to full durability and full overclock."
+		"description": "Repairs all machines to full durability and overclock."
 	},
 	FREEZE_CARD_TYPE: {
 		"name": "Freeze Card",
-		"description": "Freezes the pollution meter for 60 in-game minutes."
+		"description": "Freezes the pollution meter for 60m."
 	}
 }
 
@@ -133,6 +133,7 @@ var _run_cards_purchased: Dictionary = {}
 var _run_upgrades_purchased: Dictionary = {}
 var _run_day_effects_purchased: Dictionary = {}
 var _run_result_recorded: bool = false
+var _last_day_summary: Dictionary = {}
 var _card_counts := {
 	RAIN_CARD_TYPE: 0,
 	REPAIR_KIT_CARD_TYPE: 0,
@@ -183,6 +184,7 @@ func start_new_run(difficulty: Difficulty) -> void:
 	_run_upgrades_purchased.clear()
 	_run_day_effects_purchased.clear()
 	_run_result_recorded = false
+	_last_day_summary.clear()
 
 	for card_type in get_card_types():
 		_card_counts[card_type] = 0
@@ -246,6 +248,10 @@ func get_card_inventory_signature() -> String:
 
 func get_current_repair_amount() -> float:
 	return base_repair_amount + repair_efficiency_bonus
+
+
+func get_last_day_summary() -> Dictionary:
+	return _last_day_summary.duplicate(true)
 
 
 func add_card(card_type: String) -> bool:
@@ -364,9 +370,24 @@ func end_day() -> void:
 	day_random_events_blocked = false
 	_run_day_end_pollution_values.append(PollutionManager.pollution)
 
-	var bonus: int = low_pollution_bonus if PollutionManager.pollution < low_pollution_bonus_threshold else 0
+	var completed_day := current_day
+	var money_before := money
+	var qualified_for_bonus := PollutionManager.pollution < low_pollution_bonus_threshold
+	var bonus: int = low_pollution_bonus if qualified_for_bonus else 0
 	var money_earned: int = max(0, base_reward + bonus)
 	_run_bonus_money_earned += bonus
+	_last_day_summary = {
+		"completed_day": completed_day,
+		"next_day": completed_day + 1,
+		"money_before": money_before,
+		"money_after": money_before + money_earned,
+		"base_reward": base_reward,
+		"bonus_reward": bonus,
+		"money_earned": money_earned,
+		"ended_pollution": PollutionManager.pollution,
+		"bonus_threshold": low_pollution_bonus_threshold,
+		"qualified_for_bonus": qualified_for_bonus
+	}
 
 	money += money_earned
 	current_day += 1

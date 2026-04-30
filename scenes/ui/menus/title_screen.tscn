@@ -1,17 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://xlu7a36avlug"]
+[gd_scene format=3 uid="uid://xlu7a36avlug"]
 
 [ext_resource type="Script" uid="uid://bfwufuasm5o4g" path="res://scenes/ui/menus/title_screen.gd" id="1"]
-[ext_resource type="Theme" path="res://assets/global_ui_theme.tres" id="2_theme"]
+[ext_resource type="Theme" uid="uid://dsdc1mip7myf7" path="res://assets/global_ui_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" uid="uid://18sdxwhc6ihj" path="res://assets/title_bg.jpg" id="3_bg"]
 
 [node name="TitleScreen" type="CanvasLayer" unique_id=686927122]
 script = ExtResource("1")
 
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=292594399]
+position = Vector2(576, 324)
+scale = Vector2(4, 4)
+texture = ExtResource("3_bg")
+
 [node name="Backdrop" type="ColorRect" parent="." unique_id=1271647673]
+visible = false
 offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0.0470588, 0.0784314, 0.0862745, 1)
 
 [node name="GlowLeft" type="ColorRect" parent="." unique_id=197500452]
+visible = false
 offset_left = -80.0
 offset_top = 64.0
 offset_right = 380.0
@@ -19,6 +27,7 @@ offset_bottom = 584.0
 color = Color(0.14902, 0.392157, 0.333333, 0.2)
 
 [node name="GlowRight" type="ColorRect" parent="." unique_id=1191138169]
+visible = false
 offset_left = 772.0
 offset_top = 120.0
 offset_right = 1228.0
@@ -43,16 +52,18 @@ theme_override_constants/separation = 18
 
 [node name="TitleLabel" type="Label" parent="Center/Content/TitleBlock" unique_id=500312681]
 layout_mode = 2
-theme_override_font_sizes/font_size = 67
+theme_override_colors/font_outline_color = Color(0.09411765, 0.078431375, 0.14509805, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/font_size = 80
 text = "Pollutechnician"
-horizontal_alignment = 0
 
 [node name="SubtitleLabel" type="Label" parent="Center/Content/TitleBlock" unique_id=2061083565]
 custom_minimum_size = Vector2(520, 0)
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.09411765, 0.078431375, 0.14509805, 1)
+theme_override_constants/outline_size = 12
 theme_override_font_sizes/font_size = 24
-text = "Keep the city breathing, one machine at a time."
-horizontal_alignment = 0
+text = "Keep the city breathing one machine at a time."
 autowrap_mode = 3
 
 [node name="Buttons" type="VBoxContainer" parent="Center/Content" unique_id=1312001135]
@@ -73,6 +84,7 @@ theme_override_font_sizes/font_size = 29
 text = "Tutorial"
 
 [node name="LatestRunButton" type="Button" parent="." unique_id=105110028]
+anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 32.0

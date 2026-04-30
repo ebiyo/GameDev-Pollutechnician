@@ -2,8 +2,8 @@ extends Node2D
 
 const GAME_OVER_SCENE := preload("res://scenes/ui/menus/game_over.tscn")
 
-@onready var day_end_screen: CanvasLayer = $DayEnd
-@onready var day_start_screen: CanvasLayer = $DayStart
+@onready var day_end_screen = $DayEnd
+@onready var day_start_screen = $DayStart
 @onready var pause_menu: PauseMenu = $PauseMenu
 @onready var repair_popup: RepairPopup = $RepairPopup
 @onready var win_screen: CanvasLayer = $Win
@@ -15,6 +15,7 @@ func _ready() -> void:
 	PollutionManager.game_over.connect(_on_game_over)
 	GameManager.day_ended.connect(_on_day_ended)
 	GameManager.game_won.connect(_on_game_won)
+	day_end_screen.next_day_requested.connect(_on_day_end_next_day_requested)
 	repair_popup.popup_closed.connect(_on_repair_popup_closed)
 	pause_menu.resume_requested.connect(_on_pause_menu_resume_requested)
 	_connect_machine_signals()
@@ -56,9 +57,16 @@ func _on_game_over() -> void:
 func _on_day_ended(_money_earned: int) -> void:
 	if repair_popup.visible:
 		repair_popup.close()
+	day_start_screen.visible = false
+	day_end_screen.process_mode = Node.PROCESS_MODE_ALWAYS
+	day_end_screen.visible = true
+	_set_tree_paused(true)
+
+
+func _on_day_end_next_day_requested() -> void:
 	day_end_screen.visible = false
-	day_start_screen.visible = true
 	day_start_screen.process_mode = Node.PROCESS_MODE_ALWAYS
+	day_start_screen.visible = true
 	_set_tree_paused(true)
 
 
@@ -111,7 +119,7 @@ func _can_open_pause_menu() -> bool:
 	if GameManager.current_phase != GameManager.Phase.ACTIVE:
 		return false
 
-	if repair_popup.visible or day_start_screen.visible or win_screen.visible:
+	if repair_popup.visible or day_end_screen.visible or day_start_screen.visible or win_screen.visible:
 		return false
 
 	if is_instance_valid(game_over_screen) and game_over_screen.visible:
