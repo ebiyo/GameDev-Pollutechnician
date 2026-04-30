@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dfe5wjesd2jgn" path="res://scenes/ui/popups/repair_popup.tscn" id="4_4w2ku"]
 [ext_resource type="PackedScene" uid="uid://dcpytoslsfaa5" path="res://scenes/ui/overlays/day_end.tscn" id="5_2q85e"]
 [ext_resource type="PackedScene" path="res://scenes/ui/overlays/day_start.tscn" id="6_4hp2r"]
+[ext_resource type="PackedScene" path="res://scenes/ui/overlays/run_intro.tscn" id="6_run_intro"]
 [ext_resource type="PackedScene" uid="uid://cppa78g5gbnuo" path="res://scenes/ui/menus/win.tscn" id="6_cnmbu"]
 [ext_resource type="PackedScene" path="res://scenes/ui/menus/pause_menu.tscn" id="7_pause"]
 [ext_resource type="Texture2D" uid="uid://c5qn3pohn7edi" path="res://assets/Dungeon Gathering Free Version/Set 1.png" id="9_j0vxu"]
@@ -413,6 +414,8 @@ horizontal_alignment = 1
 [node name="DayEnd" parent="." unique_id=1166230509 instance=ExtResource("5_2q85e")]
 
 [node name="DayStart" parent="." unique_id=2049444871 instance=ExtResource("6_4hp2r")]
+
+[node name="RunIntro" parent="." instance=ExtResource("6_run_intro")]
 
 [node name="Win" parent="." unique_id=579178099 instance=ExtResource("6_cnmbu")]
 

@@ -4,6 +4,7 @@ const GAME_OVER_SCENE := preload("res://scenes/ui/menus/game_over.tscn")
 
 @onready var day_end_screen = $DayEnd
 @onready var day_start_screen = $DayStart
+@onready var run_intro_screen: CanvasLayer = $RunIntro
 @onready var pause_menu: PauseMenu = $PauseMenu
 @onready var repair_popup: RepairPopup = $RepairPopup
 @onready var win_screen: CanvasLayer = $Win
@@ -21,10 +22,10 @@ func _ready() -> void:
 	_connect_machine_signals()
 	day_end_screen.visible = false
 	day_start_screen.visible = false
+	run_intro_screen.visible = false
 	pause_menu.visible = false
 	win_screen.visible = false
-	_set_tree_paused(false)
-	GameManager.start_day()
+	await _start_new_run_intro()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -99,6 +100,13 @@ func _on_repair_popup_closed() -> void:
 
 func _on_pause_menu_resume_requested() -> void:
 	_close_pause_menu()
+
+
+func _start_new_run_intro() -> void:
+	_set_tree_paused(true)
+	await run_intro_screen.play_intro()
+	_set_tree_paused(false)
+	GameManager.start_day()
 
 
 func _set_tree_paused(should_pause: bool) -> void:

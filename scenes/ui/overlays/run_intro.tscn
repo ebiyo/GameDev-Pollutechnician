@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://c3b7vdjq43ywn"]
+
+[ext_resource type="Script" uid="uid://xrrm8yj53kww" path="res://scenes/ui/overlays/run_intro.gd" id="1"]
+[ext_resource type="Theme" uid="uid://dsdc1mip7myf7" path="res://assets/global_ui_theme.tres" id="2_theme"]
+
+[node name="RunIntro" type="CanvasLayer" unique_id=1805270553]
+script = ExtResource("1")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=354073069]
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 2
+color = Color(0.0196078, 0.0352941, 0.0431373, 0.6)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=501566834]
+offset_right = 1152.0
+offset_bottom = 648.0
+theme = ExtResource("2_theme")
+
+[node name="MessageLabel" type="Label" parent="CenterContainer" unique_id=1388392800]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.0235294, 0.0470588, 0.054902, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 72
+text = "Ready..."
+horizontal_alignment = 1
