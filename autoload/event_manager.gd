@@ -10,13 +10,13 @@ const EVENT_POOL: Array[Dictionary] = [
 		"desc": "A nearby fire spikes pollution.",
 		"effect": "pollution_boost",
 		"value": 4.0,
-		"duration": 28.0
+		"duration": 25.0
 	},
 	{
 		"name": "Machine Surge",
 		"desc": "One machine drains twice as fast.",
 		"effect": "machine_surge",
-		"duration": 28.0
+		"duration": 32.0
 	},
 	{
 		"name": "Clean Air",
