@@ -6,12 +6,12 @@ const REPAIR_KIT_CARD_COST: int = 45
 const SUPER_REPAIR_KIT_CARD_COST: int = 75
 const FREEZE_CARD_COST: int = 50
 const SPEED_BOOST_COST: int = 30
-const REPAIR_EFFICIENCY_COST: int = 45
+const REPAIR_EFFICIENCY_COST: int = 50
 const CAR_FREE_DAY_COST: int = 35
 const SHIELD_COST: int = 55
 const FLASH_COST: int = 80
 const SPEED_BOOST_AMOUNT: float = 0.15
-const REPAIR_EFFICIENCY_GAIN: float = 4.0
+const REPAIR_EFFICIENCY_GAIN: float = 3.0
 const FLASH_SPEED_MULTIPLIER: float = 2.0
 
 @onready var title_label: Label = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/TitleLabel
@@ -124,7 +124,7 @@ func _get_offer_pool() -> Array[Dictionary]:
 			"Upgrade",
 			"Repair Efficiency",
 			REPAIR_EFFICIENCY_COST,
-			"+4 repair per hit permanently."
+			"+3 repair per hit permanently."
 		),
 		_make_offer(
 			"car_free_day",

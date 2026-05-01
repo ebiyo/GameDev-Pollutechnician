@@ -77,6 +77,7 @@ func _input(event: InputEvent) -> void:
 
 
 func open(machine: Machine) -> void:
+	AudioManager.play_repair_popup()
 	current_machine = machine
 	current_machine.is_in_repair = true
 	needle_pos = 0.0

@@ -40,11 +40,11 @@ func _update_animation(input_vector: Vector2) -> void:
 
 
 func _update_footsteps(input_vector: Vector2, delta: float) -> void:
+	_footstep_timer -= delta
+
 	if input_vector.is_zero_approx():
-		_footstep_timer = 0.0
 		return
 
-	_footstep_timer -= delta
 	if _footstep_timer > 0.0:
 		return
 

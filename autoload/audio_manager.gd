@@ -20,6 +20,7 @@ const SFX_REPAIR_FAIL := preload("res://assets/audio/sfx/repair_fail.wav")
 const SFX_SCENE_TRANSITION := preload("res://assets/audio/sfx/scene_transition.wav")
 const SFX_USE_CARD := preload("res://assets/audio/sfx/use_card.wav")
 const SFX_WIN := preload("res://assets/audio/sfx/win.wav")
+const SFX_REPAIR_POPUP := preload("res://assets/audio/sfx/repair_popup.wav")
 
 const REPAIR_SUCCESS_SOUNDS: Array[AudioStream] = [
 	preload("res://assets/audio/sfx/repair_success/repair_1.wav"),
@@ -71,6 +72,10 @@ func play_close() -> void:
 	_play_sfx(SFX_CLOSE)
 
 
+func play_repair_popup() -> void:
+	_play_sfx(SFX_REPAIR_POPUP, false, -4.0)
+
+
 func play_scene_transition() -> void:
 	_play_sfx(SFX_SCENE_TRANSITION)
 
@@ -92,7 +97,7 @@ func play_random_repair_success() -> void:
 
 
 func play_footstep() -> void:
-	_play_random_sfx(FOOTSTEP_SOUNDS, true)
+	_play_random_sfx(FOOTSTEP_SOUNDS, true, -10.0)
 
 
 func play_building_fire() -> void:
@@ -204,24 +209,25 @@ func _play_music(track_id: String, stream: AudioStream, restart: bool, from_posi
 	_music_player.play(from_position)
 
 
-func _play_sfx(stream: AudioStream, _pausable: bool = false) -> void:
+func _play_sfx(stream: AudioStream, _pausable: bool = false, volume_db: float = 0.0) -> void:
 	if stream == null:
 		return
 
 	var player := AudioStreamPlayer.new()
 	player.bus = BUS_SFX
 	player.stream = stream
+	player.volume_db = volume_db
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(player)
 	player.finished.connect(player.queue_free)
 	player.play()
 
 
-func _play_random_sfx(streams: Array[AudioStream], pausable: bool = false) -> void:
+func _play_random_sfx(streams: Array[AudioStream], pausable: bool = false, volume_db: float = 0.0) -> void:
 	if streams.is_empty():
 		return
 
-	_play_sfx(streams[_rng.randi_range(0, streams.size() - 1)], pausable)
+	_play_sfx(streams[_rng.randi_range(0, streams.size() - 1)], pausable, volume_db)
 
 
 func _ensure_audio_buses() -> void:
