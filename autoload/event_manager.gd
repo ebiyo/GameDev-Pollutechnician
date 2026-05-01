@@ -119,6 +119,7 @@ func _apply_event(event_data: Dictionary) -> void:
 				"value": value
 			}
 			_set_timed_log_entry(effect_name, "Building Fire", "pollution rate +%.0f" % value)
+			AudioManager.play_building_fire()
 		"machine_surge":
 			var machines: Array[Node] = get_tree().get_nodes_in_group("machines")
 			if machines.is_empty():
@@ -137,10 +138,12 @@ func _apply_event(event_data: Dictionary) -> void:
 				"machine_name": chosen_machine.name
 			}
 			_set_timed_log_entry(effect_name, "Machine Surge", "drain x2", _format_machine_name(chosen_machine.name))
+			AudioManager.play_machine_surge()
 		"pollution_drop":
 			PollutionManager.pollution = clampf(PollutionManager.pollution - value, 0.0, 100.0)
 			PollutionManager.pollution_changed.emit(PollutionManager.pollution)
 			_add_instant_log_entry("Clean Air", "reduces pollution by %.0f%%" % value)
+			AudioManager.play_clean_air()
 		"efficiency_drop":
 			for machine_node in get_tree().get_nodes_in_group("machines"):
 				var machine: Machine = machine_node as Machine
@@ -150,6 +153,7 @@ func _apply_event(event_data: Dictionary) -> void:
 				"remaining": duration
 			}
 			_set_timed_log_entry(effect_name, "Power Flicker", "all machines at 50% efficiency")
+			AudioManager.play_power_flicker()
 
 
 func log_instant_effect(label: String, detail: String) -> void:

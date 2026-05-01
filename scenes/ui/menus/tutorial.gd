@@ -12,6 +12,7 @@ var current_page := 0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	AudioManager.play_title_music()
 	prev_button.pressed.connect(_show_previous_page)
 	next_button.pressed.connect(_show_next_page)
 	$Center/Content/Footer/BackButton.pressed.connect(_go_back)
@@ -20,17 +21,20 @@ func _ready() -> void:
 
 func _show_previous_page() -> void:
 	if current_page > 0:
+		AudioManager.play_click()
 		current_page -= 1
 		_refresh_page()
 
 
 func _show_next_page() -> void:
 	if current_page < pages.size() - 1:
+		AudioManager.play_click()
 		current_page += 1
 		_refresh_page()
 
 
 func _go_back() -> void:
+	AudioManager.play_close()
 	get_tree().paused = false
 	SceneTransition.change_scene_to_file(TITLE_SCENE_PATH)
 

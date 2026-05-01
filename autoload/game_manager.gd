@@ -294,16 +294,19 @@ func use_card(card_type: String) -> bool:
 			)
 			PollutionManager.pollution_changed.emit(PollutionManager.pollution)
 			EventManager.log_instant_effect("Rain Card", "-15 pollution")
+			AudioManager.play_use_card()
 			return true
 		REPAIR_KIT_CARD_TYPE:
 			_card_counts[card_type] = get_card_count(card_type) - 1
 			_repair_all_machines_durability_only()
 			EventManager.log_instant_effect("Repair Kit Card", "all machines repaired")
+			AudioManager.play_use_card()
 			return true
 		SUPER_REPAIR_KIT_CARD_TYPE:
 			_card_counts[card_type] = get_card_count(card_type) - 1
 			_repair_all_machines_full()
 			EventManager.log_instant_effect("Super Repair Kit Card", "all machines fully restored")
+			AudioManager.play_use_card()
 			return true
 		FREEZE_CARD_TYPE:
 			_card_counts[card_type] = get_card_count(card_type) - 1
@@ -314,6 +317,7 @@ func use_card(card_type: String) -> bool:
 				"pollution frozen",
 				FREEZE_CARD_DURATION_MINUTES
 			)
+			AudioManager.play_use_card()
 			return true
 
 	return false
@@ -422,6 +426,8 @@ func record_offer_purchase(offer: Dictionary) -> void:
 
 
 func finalize_run(won: bool) -> void:
+	current_phase = Phase.END
+
 	if _run_result_recorded:
 		return
 

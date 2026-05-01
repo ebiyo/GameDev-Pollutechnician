@@ -10,6 +10,7 @@ const TITLE_SCENE_PATH := "res://scenes/ui/menus/title_screen.tscn"
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	AudioManager.play_title_music()
 	back_button.pressed.connect(_on_back_button_pressed)
 	easy_label.text = _build_latest_run_details(GameManager.Difficulty.EASY)
 	normal_label.text = _build_latest_run_details(GameManager.Difficulty.NORMAL)
@@ -17,6 +18,7 @@ func _ready() -> void:
 
 
 func _on_back_button_pressed() -> void:
+	AudioManager.play_close()
 	get_tree().paused = false
 	SceneTransition.change_scene_to_file(TITLE_SCENE_PATH)
 

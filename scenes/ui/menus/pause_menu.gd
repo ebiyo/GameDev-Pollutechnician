@@ -27,19 +27,25 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func open() -> void:
+	AudioManager.pause_music(true)
 	show()
 	resume_button.grab_focus()
 
 
 func close() -> void:
+	AudioManager.pause_music(false)
 	hide()
 
 
 func _on_resume_button_pressed() -> void:
+	AudioManager.play_close()
 	resume_requested.emit()
 
 
 func _on_back_to_title_button_pressed() -> void:
+	AudioManager.play_close()
 	get_tree().paused = false
+	AudioManager.pause_music(false)
+	GameManager.finalize_run(false)
 	back_to_title_requested.emit()
 	SceneTransition.change_scene_to_file(TITLE_SCENE_PATH)

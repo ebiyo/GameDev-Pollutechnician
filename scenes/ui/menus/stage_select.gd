@@ -11,6 +11,7 @@ const WORLD_SCENE_PATH := "res://scenes/world/main.tscn"
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	AudioManager.play_title_music()
 	easy_button.pressed.connect(_on_easy_button_pressed)
 	normal_button.pressed.connect(_on_normal_button_pressed)
 	hard_button.pressed.connect(_on_hard_button_pressed)
@@ -30,11 +31,14 @@ func _on_hard_button_pressed() -> void:
 
 
 func _on_back_button_pressed() -> void:
+	AudioManager.play_close()
 	get_tree().paused = false
 	SceneTransition.change_scene_to_file(TITLE_SCENE_PATH)
 
 
 func _start_run(difficulty: int) -> void:
+	AudioManager.play_click()
+	AudioManager.play_run_music()
 	get_tree().paused = false
 	GameManager.start_new_run(difficulty)
 	SceneTransition.change_scene_to_file(WORLD_SCENE_PATH)

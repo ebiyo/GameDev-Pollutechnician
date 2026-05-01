@@ -41,5 +41,6 @@ func _on_day_ended(money_earned: int) -> void:
 
 
 func _on_next_day_button_pressed() -> void:
+	AudioManager.play_click()
 	visible = false
 	next_day_requested.emit()

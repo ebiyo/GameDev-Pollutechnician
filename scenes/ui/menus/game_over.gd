@@ -17,6 +17,7 @@ func _ready() -> void:
 
 
 func _on_restart_button_pressed() -> void:
+	AudioManager.play_click()
 	get_tree().paused = false
 	SceneTransition.change_scene_to_file(TITLE_SCENE_PATH)
 

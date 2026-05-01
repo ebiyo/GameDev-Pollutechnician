@@ -89,7 +89,9 @@ func open(machine: Machine) -> void:
 	timing_bar.queue_redraw()
 
 
-func close() -> void:
+func close(play_sound: bool = true) -> void:
+	if play_sound:
+		AudioManager.play_close()
 	popup_closed.emit()
 	hide()
 	if is_instance_valid(current_machine):
@@ -108,11 +110,13 @@ func _handle_space_press() -> void:
 			)
 		else:
 			current_machine.overclock = minf(current_machine.overclock + overclock_amount, current_machine.max_overclock)
+		AudioManager.play_random_repair_success()
 	else:
 		current_machine.durability = maxf(
 			current_machine.durability - GameManager.repair_miss_penalty,
 			0.0
 		)
+		AudioManager.play_repair_fail()
 		_flash_durability_bar()
 
 	_randomize_hit_zone()

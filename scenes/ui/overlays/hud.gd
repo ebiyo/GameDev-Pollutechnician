@@ -144,6 +144,7 @@ func _on_cheat_end_day_button_pressed() -> void:
 	if GameManager.current_phase != GameManager.Phase.ACTIVE:
 		return
 
+	AudioManager.play_click()
 	GameManager.end_day()
 
 

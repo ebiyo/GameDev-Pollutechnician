@@ -59,12 +59,14 @@ func _on_offer_button_pressed(index: int) -> void:
 	if !_purchase_offer(offer):
 		return
 
+	AudioManager.play_purchase_item()
 	_purchased_offer_ids[String(offer.get("id", ""))] = true
 	_update_labels()
 	_refresh_offer_cards()
 
 
 func _on_start_day_button_pressed() -> void:
+	AudioManager.play_click()
 	hide()
 	get_tree().paused = false
 	GameManager.start_day()

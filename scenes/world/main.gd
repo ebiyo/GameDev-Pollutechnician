@@ -13,6 +13,7 @@ var game_over_screen: CanvasLayer
 
 
 func _ready() -> void:
+	AudioManager.play_run_music()
 	PollutionManager.game_over.connect(_on_game_over)
 	GameManager.day_ended.connect(_on_day_ended)
 	GameManager.game_won.connect(_on_game_won)
@@ -57,7 +58,7 @@ func _on_game_over() -> void:
 
 func _on_day_ended(_money_earned: int) -> void:
 	if repair_popup.visible:
-		repair_popup.close()
+		repair_popup.close(false)
 	day_start_screen.visible = false
 	day_end_screen.process_mode = Node.PROCESS_MODE_ALWAYS
 	day_end_screen.visible = true
@@ -73,7 +74,7 @@ func _on_day_end_next_day_requested() -> void:
 
 func _on_game_won() -> void:
 	if repair_popup.visible:
-		repair_popup.close()
+		repair_popup.close(false)
 	GameManager.finalize_run(true)
 	win_screen.process_mode = Node.PROCESS_MODE_ALWAYS
 	win_screen.visible = true
@@ -137,6 +138,7 @@ func _can_open_pause_menu() -> bool:
 
 
 func _open_pause_menu() -> void:
+	AudioManager.play_click()
 	pause_menu.open()
 	_set_tree_paused(true)
 
